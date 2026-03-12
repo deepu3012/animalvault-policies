@@ -3,12 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <title>Terms and Conditions of Use — Animal Vault</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-card: #0b1020;
+      --accent: #4ade80;
+      --accent-soft: rgba(74, 222, 128, 0.16);
+      --accent-strong: #22c55e;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --shadow-soft: 0 24px 80px rgba(15, 23, 42, 0.9);
+      --radius-xl: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #020617 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .shell {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      padding: 1px;
+      border-radius: calc(var(--radius-xl) + 1px);
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.35), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(52, 211, 153, 0.5), transparent 55%),
+        radial-gradient(circle at 50% 120%, rgba(129, 140, 248, 0.25), transparent 55%);
+    }
+
+    .card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background-color: rgba(15, 23, 42, 0.98);
+      padding: 28px 22px 26px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(18px);
+      max-height: calc(100vh - 64px);
+      overflow: auto;
+    }
+
+    @media (min-width: 640px) {
+      .card {
+        padding: 32px 30px 30px;
+      }
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(26px, 3.3vw, 30px);
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin-top: 26px;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    p {
+      margin: 6px 0 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 4px 0 10px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    li + li {
+      margin-top: 2px;
+    }
+
+    hr {
+      margin: 20px 0 18px;
+      border: 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    strong {
+      color: #e5e7eb;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .lede {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Terms and Conditions of Use — Animal Vault</h1>
+  <main class="shell">
+    <section class="card legal-content" aria-labelledby="terms-title">
+      <h1 id="terms-title">Terms and Conditions of Use — Animal Vault</h1>
 
-  <p><strong>Last updated:</strong> February 24, 2026</p>
-  <p><strong>Effective date:</strong> February 24, 2026</p>
+      <p><strong>Last updated:</strong> February 24, 2026</p>
+      <p class="lede"><strong>Effective date:</strong> February 24, 2026</p>
 
   <hr />
 
@@ -266,6 +393,8 @@
   <p><strong>Email:</strong> dvusup@gmail.com</p>
 
   <hr />
+    </section>
+  </main>
 </body>
 </html>
 
