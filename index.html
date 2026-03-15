@@ -170,9 +170,15 @@
     }
     .hcard:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-    /* ── navbar scroll ── */
-    #nav { transition: background 0.35s, border-color 0.35s; border-bottom: 1px solid transparent; }
-    #nav.scrolled { background: rgba(5,5,5,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-color: rgba(255,255,255,0.07); }
+    /* ── navbar ── */
+    #nav {
+      background: rgba(5,5,5,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: border-color 0.35s;
+    }
+    #nav.scrolled { border-color: rgba(255,255,255,0.13); }
 
     /* ── scroll indicator bounce ── */
     @keyframes bounce2 { 0%,100%{transform:translateY(0);opacity:1} 50%{transform:translateY(7px);opacity:0.4} }
