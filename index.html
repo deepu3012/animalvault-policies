@@ -191,6 +191,24 @@
     /* ── step dot ── */
     .step-dot { width: 10px; height: 10px; border-radius: 50%; background: #2C2C2E; transition: background 0.3s, transform 0.3s; cursor: pointer; }
     .step-dot.active { background: #B7F20A; transform: scale(1.3); }
+
+    /* ── sticky features (desktop) ── */
+    @media (min-width: 1024px) {
+      #feat-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+      .feat-scroll-room { height: 300vh; }
+      .feat-panel { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
+      .feat-panel.fp.inactive { pointer-events: none; }
+    }
+    @media (max-width: 1023px) {
+      #feat-sticky { padding-top: 5rem; padding-bottom: 5rem; }
+      .feat-scroll-room { display: none; }
+      .feat-panel { padding: 3rem 0; }
+      .feat-panel.fp.inactive { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ── lang toggle ── */
+    #lang-extra { display: none; }
+    #lang-extra.open { display: contents; }
   </style>
 </head>
 <body class="font-inter">
@@ -404,29 +422,29 @@
 
 
 <!-- ═══════════════════════════ FEATURES SECTION ═══════════════════════════ -->
-<section id="features" class="py-24 px-6 relative overflow-hidden">
+<section id="features" class="relative overflow-x-hidden">
   <div class="glow w-[500px] h-[500px] bg-av-lime/8 top-0 left-1/2 -translate-x-1/2"></div>
 
-  <div class="max-w-7xl mx-auto">
+  <!-- Sticky pin: sticks at top while scroll room passes on desktop -->
+  <div id="feat-sticky" class="px-6">
+    <div class="max-w-7xl mx-auto h-full flex flex-col">
 
-    <!-- header -->
-    <div class="text-center mb-16 reveal">
-      <div class="pill glass-lime text-av-lime mb-6 inline-flex">
-        <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
-        Core Features
+      <!-- header -->
+      <div class="text-center pt-20 pb-6 flex-shrink-0">
+        <div class="pill glass-lime text-av-lime mb-4 inline-flex">
+          <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
+          Core Features
+        </div>
+        <h2 class="text-4xl sm:text-5xl font-black tracking-tight">
+          Everything you need,<br /><span class="grad-lime">nothing you don't.</span>
+        </h2>
       </div>
-      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight">
-        Everything you need,<br /><span class="grad-lime">nothing you don't.</span>
-      </h2>
-      <p class="text-av-muted text-lg mt-4 max-w-xl mx-auto">Four pillars of powerful farm management — designed to be fast, simple, and obsessively useful.</p>
-    </div>
 
-    <!-- sticky feature layout -->
-    <div class="relative">
-      <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
+      <!-- two-col layout -->
+      <div class="flex-1 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center min-h-0 pb-8">
 
-        <!-- phone (sticky on desktop) -->
-        <div class="hidden lg:flex flex-col items-center" style="position: sticky; top: 120px; align-self: flex-start; height: fit-content;">
+        <!-- phone (left, desktop only) -->
+        <div class="hidden lg:flex flex-col items-center flex-shrink-0">
           <div class="phone" id="feat-phone" style="height: 500px; width: 250px;">
             <div class="phone-notch"></div>
 
@@ -648,18 +666,18 @@
 
           <!-- step dots -->
           <div class="flex gap-3 mt-6">
-            <div class="step-dot active" id="dot-0" onclick="goToSlide(0)"></div>
-            <div class="step-dot" id="dot-1" onclick="goToSlide(1)"></div>
-            <div class="step-dot" id="dot-2" onclick="goToSlide(2)"></div>
-            <div class="step-dot" id="dot-3" onclick="goToSlide(3)"></div>
+            <div class="step-dot active" id="dot-0" onclick="manualSlide(0)"></div>
+            <div class="step-dot" id="dot-1" onclick="manualSlide(1)"></div>
+            <div class="step-dot" id="dot-2" onclick="manualSlide(2)"></div>
+            <div class="step-dot" id="dot-3" onclick="manualSlide(3)"></div>
           </div>
         </div>
 
-        <!-- feature text panels -->
-        <div class="flex-1 space-y-0" id="feat-panels">
+        <!-- feature text panels (absolutely stacked on desktop) -->
+        <div class="flex-1 relative min-h-0 self-stretch" id="feat-panels">
 
           <!-- panel 0 -->
-          <div class="fp active py-16 border-l border-av-border pl-8 reveal" data-feat="0">
+          <div class="feat-panel fp active pl-8 border-l border-av-border" data-feat="0">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             </div>
@@ -683,7 +701,7 @@
           </div>
 
           <!-- panel 1 -->
-          <div class="fp inactive py-16 border-l border-av-border pl-8 reveal" data-feat="1">
+          <div class="feat-panel fp inactive pl-8 border-l border-av-border" data-feat="1" style="pointer-events:none">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </div>
@@ -707,7 +725,7 @@
           </div>
 
           <!-- panel 2 -->
-          <div class="fp inactive py-16 border-l border-av-border pl-8 reveal" data-feat="2">
+          <div class="feat-panel fp inactive pl-8 border-l border-av-border" data-feat="2" style="pointer-events:none">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
             </div>
@@ -731,7 +749,7 @@
           </div>
 
           <!-- panel 3 -->
-          <div class="fp inactive py-16 border-l border-av-border pl-8 reveal" data-feat="3">
+          <div class="feat-panel fp inactive pl-8 border-l border-av-border" data-feat="3" style="pointer-events:none">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.35)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
@@ -755,9 +773,12 @@
           </div>
 
         </div><!-- /feat-panels -->
-      </div>
-    </div>
-  </div>
+      </div><!-- /two-col -->
+    </div><!-- /max-w-7xl -->
+  </div><!-- /feat-sticky -->
+
+  <!-- scroll room: 3×100vh gives the sticky panel room to pin through 4 slides -->
+  <div class="feat-scroll-room"></div>
 </section>
 
 
@@ -792,7 +813,17 @@
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇯🇵 Japanese</span>
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇰🇷 Korean</span>
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇨🇳 Chinese</span>
-          <span class="text-xs bg-av-lime/10 border border-av-lime/25 rounded-full px-3 py-1 text-av-lime font-medium">+ 7 more</span>
+          <!-- hidden languages, revealed on click -->
+          <span id="lang-extra">
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇮🇳 Telugu</span>
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇹🇭 Thai</span>
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇹🇷 Turkish</span>
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇻🇳 Vietnamese</span>
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇮🇩 Indonesian</span>
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇮🇹 Italian</span>
+            <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇹🇼 Chinese Traditional</span>
+          </span>
+          <button id="lang-more-btn" onclick="toggleLangs()" class="text-xs bg-av-lime/10 border border-av-lime/25 rounded-full px-3 py-1 text-av-lime font-medium hover:bg-av-lime/20 transition-all cursor-pointer">+ 7 more</button>
         </div>
       </div>
 
@@ -1054,46 +1085,57 @@ gsap.from('#bento-grid > *', {
   y: 40, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', stagger: 0.1
 });
 
-/* ─── 7. Feature scroll — phone slide switching via IntersectionObserver ─── */
+/* ─── 7. Feature slide switching ─── */
 let currentSlide = 0;
+let scrollLocked = false;
+let scrollLockTimer = null;
 
-function goToSlide(idx) {
-  if (idx === currentSlide) return;
-
+function applySlide(idx) {
   const prev = document.getElementById('pslide-' + currentSlide);
   const next = document.getElementById('pslide-' + idx);
   if (prev) { prev.classList.remove('visible-slide'); prev.classList.add('hidden-slide'); }
   if (next) { next.classList.remove('hidden-slide'); next.classList.add('visible-slide'); }
-
   document.querySelectorAll('.fp').forEach((p, i) => {
-    p.classList.toggle('active', i === idx);
+    p.classList.toggle('active',   i === idx);
     p.classList.toggle('inactive', i !== idx);
+    p.style.pointerEvents = (i === idx) ? '' : 'none';
   });
-
   document.querySelectorAll('.step-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-
   currentSlide = idx;
 }
 
-// Lenis scroll listener — checks which panel midpoint is closest to screen centre
-// This is the most reliable approach when Lenis overrides native scroll events
-const featPanels = Array.from(document.querySelectorAll('.fp'));
+function manualSlide(idx) {
+  scrollLocked = true;
+  clearTimeout(scrollLockTimer);
+  scrollLockTimer = setTimeout(() => { scrollLocked = false; }, 1500);
+  applySlide(idx);
+}
 
-lenis.on('scroll', () => {
-  if (window.innerWidth < 1024) return;
-  const mid = window.innerHeight / 2;
-  let closest = 0;
-  let closestDist = Infinity;
-  featPanels.forEach((panel, i) => {
-    const rect = panel.getBoundingClientRect();
-    const panelMid = rect.top + rect.height / 2;
-    const dist = Math.abs(panelMid - mid);
-    if (dist < closestDist) { closestDist = dist; closest = i; }
-  });
-  goToSlide(closest);
+// Scroll-driven: uses section scroll progress to map to slide index
+lenis.on('scroll', ({ scroll }) => {
+  if (window.innerWidth < 1024 || scrollLocked) return;
+  const section = document.getElementById('features');
+  if (!section) return;
+  const sectionTop = section.getBoundingClientRect().top + scroll;
+  const sectionHeight = section.offsetHeight;
+  const viewportHeight = window.innerHeight;
+  const scrollableRange = sectionHeight - viewportHeight;
+  if (scrollableRange <= 0) return;
+  const scrolledWithin = Math.max(0, scroll - sectionTop);
+  const progress = Math.min(1, scrolledWithin / scrollableRange);
+  const slideIdx = Math.min(3, Math.floor(progress * 4));
+  if (slideIdx !== currentSlide) applySlide(slideIdx);
 });
 
-/* ─── 8. Pricing card 3D tilt ─── */
+/* ─── 8. Languages toggle ─── */
+function toggleLangs() {
+  const extra = document.getElementById('lang-extra');
+  const btn = document.getElementById('lang-more-btn');
+  const isOpen = extra.classList.toggle('open');
+  btn.textContent = isOpen ? '− show less' : '+ 7 more';
+}
+
+/* ─── 9. Pricing card 3D tilt ─── */
 ['pro-card', 'lifetime-card'].forEach(id => {
   const card = document.getElementById(id);
   if (!card) return;
@@ -1108,7 +1150,7 @@ lenis.on('scroll', () => {
   });
 });
 
-/* ─── 9. Pricing cards stagger ─── */
+/* ─── 10. Pricing cards stagger ─── */
 gsap.from('#pricing .reveal', {
   scrollTrigger: { trigger: '#pricing', start: 'top 80%', toggleActions: 'play none none none' },
   y: 40, opacity: 0, duration: 0.7, ease: 'power2.out', stagger: 0.13
