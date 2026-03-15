@@ -1054,39 +1054,42 @@ gsap.from('#bento-grid > *', {
   y: 40, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', stagger: 0.1
 });
 
-/* ─── 7. Feature scroll — phone slide switching ─── */
+/* ─── 7. Feature scroll — phone slide switching via IntersectionObserver ─── */
 let currentSlide = 0;
 
 function goToSlide(idx) {
   if (idx === currentSlide) return;
+
   const prev = document.getElementById('pslide-' + currentSlide);
   const next = document.getElementById('pslide-' + idx);
   if (prev) { prev.classList.remove('visible-slide'); prev.classList.add('hidden-slide'); }
   if (next) { next.classList.remove('hidden-slide'); next.classList.add('visible-slide'); }
 
-  // update panels
   document.querySelectorAll('.fp').forEach((p, i) => {
     p.classList.toggle('active', i === idx);
     p.classList.toggle('inactive', i !== idx);
   });
 
-  // update dots
   document.querySelectorAll('.step-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
 
   currentSlide = idx;
 }
 
-// Scroll-linked feature switching (desktop)
-const panels = document.querySelectorAll('.fp');
-panels.forEach((panel, i) => {
-  ScrollTrigger.create({
-    trigger: panel,
-    start: 'top 55%',
-    end: 'bottom 45%',
-    onEnter:      () => goToSlide(i),
-    onEnterBack:  () => goToSlide(i),
+// IntersectionObserver: switches slide when a panel enters the centre 30% of the viewport
+if (window.innerWidth >= 1024) {
+  const featObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        goToSlide(parseInt(entry.target.dataset.feat));
+      }
+    });
+  }, {
+    rootMargin: '-35% 0px -35% 0px',
+    threshold: 0
   });
-});
+
+  document.querySelectorAll('.fp').forEach(p => featObs.observe(p));
+}
 
 /* ─── 8. Pricing card 3D tilt ─── */
 ['pro-card', 'lifetime-card'].forEach(id => {
