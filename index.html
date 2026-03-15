@@ -196,7 +196,7 @@
     @media (min-width: 1024px) {
       /* top:72px keeps pin BELOW the fixed navbar */
       #feat-sticky { position: sticky; top: 72px; height: calc(100vh - 72px); overflow: hidden; }
-      .feat-scroll-room { height: 300vh; }
+      .feat-scroll-room { height: 400vh; }
       .feat-panel { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
       /* inactive panels fully invisible when stacked absolutely */
       .feat-panel.fp.inactive { opacity: 0 !important; pointer-events: none !important; transform: translateX(-12px) !important; }
@@ -1117,22 +1117,24 @@ function manualSlide(idx) {
 }
 
 // Scroll-driven: maps section scroll progress to slide index
-// Uses window.scrollY (reliable with Lenis which updates native scroll)
-lenis.on('scroll', () => {
+let _sectionDocTop = null; // cached once on first scroll
+lenis.on('scroll', ({ scroll }) => {
   if (window.innerWidth < 1024 || scrollLocked) return;
   const section = document.getElementById('features');
   if (!section) return;
-  const scroll = window.scrollY;
   const navH = 72; // fixed navbar height — feat-sticky uses top:72px
-  // Absolute document position of section top
-  const sectionDocTop = section.getBoundingClientRect().top + scroll;
+  // Cache the document-absolute section top (constant for static content)
+  if (_sectionDocTop === null) {
+    _sectionDocTop = section.getBoundingClientRect().top + scroll;
+  }
   // Sticky activates when section top reaches 72px from viewport top
-  const stickyStart = sectionDocTop - navH;
+  const stickyStart = _sectionDocTop - navH;
   // Scrollable range = total section height minus the sticky viewport height
   const scrollableRange = section.offsetHeight - (window.innerHeight - navH);
   if (scrollableRange <= 0) return;
   const scrolledIn = Math.max(0, scroll - stickyStart);
   const progress = Math.min(1, scrolledIn / scrollableRange);
+  // 4 slides across 400vh → each slide = 100vh
   const slideIdx = Math.min(3, Math.floor(progress * 4));
   if (slideIdx !== currentSlide) applySlide(slideIdx);
 });
