@@ -933,8 +933,8 @@
           <h3 class="text-2xl font-black mb-1">Own it forever.</h3>
           <p class="text-av-muted text-sm mb-5">Pay once, use forever</p>
           <div class="mb-6">
-            <div class="flex items-end gap-0.5"><span class="text-5xl font-black text-av-cyan">$99</span><span class="text-av-cyan text-2xl font-black mb-1">.99</span></div>
-            <p class="text-av-dim text-sm mt-1">≈ 14 months of Pro — best value</p>
+            <div class="flex items-end gap-0.5"><span class="text-5xl font-black text-av-cyan">$199</span><span class="text-av-cyan text-2xl font-black mb-1">.99</span></div>
+            <p class="text-av-dim text-sm mt-1">≈ 33 months of Pro — best value</p>
           </div>
           <ul class="space-y-3 mb-8 flex-1">
             <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro, forever</li>
@@ -1075,21 +1075,23 @@ function goToSlide(idx) {
   currentSlide = idx;
 }
 
-// IntersectionObserver: switches slide when a panel enters the centre 30% of the viewport
-if (window.innerWidth >= 1024) {
-  const featObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        goToSlide(parseInt(entry.target.dataset.feat));
-      }
-    });
-  }, {
-    rootMargin: '-35% 0px -35% 0px',
-    threshold: 0
-  });
+// Lenis scroll listener — checks which panel midpoint is closest to screen centre
+// This is the most reliable approach when Lenis overrides native scroll events
+const featPanels = Array.from(document.querySelectorAll('.fp'));
 
-  document.querySelectorAll('.fp').forEach(p => featObs.observe(p));
-}
+lenis.on('scroll', () => {
+  if (window.innerWidth < 1024) return;
+  const mid = window.innerHeight / 2;
+  let closest = 0;
+  let closestDist = Infinity;
+  featPanels.forEach((panel, i) => {
+    const rect = panel.getBoundingClientRect();
+    const panelMid = rect.top + rect.height / 2;
+    const dist = Math.abs(panelMid - mid);
+    if (dist < closestDist) { closestDist = dist; closest = i; }
+  });
+  goToSlide(closest);
+});
 
 /* ─── 8. Pricing card 3D tilt ─── */
 ['pro-card', 'lifetime-card'].forEach(id => {
