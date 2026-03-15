@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Animal Vault — The Operating System for Your Farm</title>
-  <meta name="description" content="Effortlessly manage your farm with real-time stock tracking, complete health records, and smart AI insights. Available on iOS and Android." />
+  <meta name="description" content="Manage your farm with real-time stock tracking, health records, and AI insights." />
 
-  <!-- ═══════════════════════════════════════════════════
-       FONTS
-  ═══════════════════════════════════════════════════ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- ═══════════════════════════════════════════════════
-       TAILWIND CSS
-  ═══════════════════════════════════════════════════ -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,735 +18,685 @@
           colors: {
             av: {
               black:   '#050505',
-              surface: '#1C1C1E',
-              surface2:'#111113',
+              surface: '#111113',
+              card:    '#1C1C1E',
               border:  '#2C2C2E',
               lime:    '#B7F20A',
-              lime2:   '#A6E500',
               neon:    '#D4FF26',
               text:    '#FFFFFF',
-              muted:   '#DADADA',
-              dim:     '#888888',
+              muted:   '#A1A1A1',
+              dim:     '#555555',
               green:   '#22C55E',
               cyan:    '#00C7BE',
               red:     '#EF4444',
               orange:  '#FFA500',
             }
           },
-          fontFamily: { inter: ['Inter', 'sans-serif'] },
-          keyframes: {
-            'pulse-glow': {
-              '0%, 100%': { boxShadow: '0 0 20px 4px rgba(183,242,10,0.35)' },
-              '50%':       { boxShadow: '0 0 36px 10px rgba(183,242,10,0.6)' },
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0px) rotate(-1deg)' },
-              '50%':       { transform: 'translateY(-18px) rotate(1deg)' },
-            },
-            'gradient-shift': {
-              '0%':   { backgroundPosition: '0% 50%' },
-              '50%':  { backgroundPosition: '100% 50%' },
-              '100%': { backgroundPosition: '0% 50%' },
-            },
-            'spin-slow': {
-              from: { transform: 'rotate(0deg)' },
-              to:   { transform: 'rotate(360deg)' },
-            },
-            'border-flow': {
-              '0%':   { backgroundPosition: '0% 50%' },
-              '100%': { backgroundPosition: '200% 50%' },
-            },
-          },
-          animation: {
-            'pulse-glow':     'pulse-glow 2.5s ease-in-out infinite',
-            float:            'float 6s ease-in-out infinite',
-            'gradient-shift': 'gradient-shift 6s ease infinite',
-            'spin-slow':      'spin-slow 12s linear infinite',
-            'border-flow':    'border-flow 3s linear infinite',
-          },
+          fontFamily: { inter: ['Inter','sans-serif'] },
         }
       }
     }
   </script>
 
-  <!-- ═══════════════════════════════════════════════════
-       GSAP + ScrollTrigger + Lenis
-  ═══════════════════════════════════════════════════ -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
 
-  <!-- ═══════════════════════════════════════════════════
-       LUCIDE ICONS
-  ═══════════════════════════════════════════════════ -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-  <!-- ═══════════════════════════════════════════════════
-       BASE STYLES
-  ═══════════════════════════════════════════════════ -->
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-family: 'Inter', sans-serif; background: #050505; color: #FFFFFF; overflow-x: hidden; }
-    body { overflow-x: hidden; }
+    html, body { font-family: 'Inter', sans-serif; background: #050505; color: #fff; overflow-x: hidden; }
 
-    /* Lenis smooth scroll */
-    html.lenis { height: auto; }
-    .lenis.lenis-smooth { scroll-behavior: auto; }
-    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-
-    /* ── Gradient text utility ── */
+    /* ── gradient text ── */
     .grad-lime {
-      background: linear-gradient(135deg, #B7F20A 0%, #D4FF26 40%, #00C7BE 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(135deg, #B7F20A 0%, #D4FF26 50%, #00C7BE 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .grad-white {
-      background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(180deg, #fff 0%, #666 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
-    /* ── Glassmorphism ── */
+    /* ── glass ── */
     .glass {
-      background: rgba(28,28,30,0.6);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(28,28,30,0.7);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.07);
     }
     .glass-lime {
-      background: rgba(183,242,10,0.06);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(183,242,10,0.18);
+      background: rgba(183,242,10,0.07);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(183,242,10,0.2);
     }
 
-    /* ── Animated border card ── */
-    .border-anim {
-      position: relative;
-      background: #1C1C1E;
-      border-radius: 24px;
-      overflow: hidden;
-    }
-    .border-anim::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: 26px;
-      background: linear-gradient(90deg, #B7F20A, #00C7BE, #B7F20A, #D4FF26, #00C7BE);
-      background-size: 300% 100%;
-      animation: border-flow 3s linear infinite;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .border-anim:hover::before { opacity: 1; }
-    .border-anim .inner {
-      position: relative;
-      z-index: 1;
-      background: #1C1C1E;
-      border-radius: 22px;
-      height: 100%;
+    /* ── noise texture ── */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
     }
 
-    /* ── Noise grain overlay ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.35;
+    /* ── grid bg ── */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(183,242,10,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(183,242,10,0.04) 1px, transparent 1px);
+      background-size: 64px 64px;
     }
 
-    /* ── Phone frame ── */
-    .phone-frame {
-      width: 260px;
-      height: 530px;
-      border-radius: 42px;
+    /* ── phone ── */
+    .phone {
+      width: 240px; height: 490px;
+      border-radius: 40px;
       background: #111113;
-      border: 2px solid #2C2C2E;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.06),
-        0 40px 80px -20px rgba(0,0,0,0.9),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-      position: relative;
-      overflow: hidden;
+      border: 1.5px solid #2C2C2E;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px -10px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative; overflow: hidden; flex-shrink: 0;
     }
     .phone-notch {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 28px;
-      background: #050505;
-      border-radius: 20px;
-      z-index: 10;
-    }
-    .phone-screen {
-      position: absolute;
-      inset: 0;
-      border-radius: 40px;
-      overflow: hidden;
+      position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 24px; background: #050505; border-radius: 16px; z-index: 10;
     }
 
-    /* ── Bento grid ── */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto;
-      gap: 16px;
+    /* ── buttons ── */
+    .btn-lime {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 26px; background: #B7F20A; color: #050505;
+      font-weight: 700; font-size: 15px; border-radius: 14px;
+      border: none; cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: all 0.2s cubic-bezier(.34,1.56,.64,1);
     }
-    @media (max-width: 1024px) {
-      .bento-grid { grid-template-columns: repeat(6, 1fr); }
+    .btn-lime:hover { background: #D4FF26; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(183,242,10,0.45); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 26px; background: transparent; color: #fff;
+      font-weight: 600; font-size: 15px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; white-space: nowrap;
+      transition: all 0.2s ease;
     }
-    @media (max-width: 640px) {
-      .bento-grid { grid-template-columns: 1fr; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+    /* ── pill badge ── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 14px; border-radius: 999px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
     }
 
-    /* ── CTA buttons ── */
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: #B7F20A;
-      color: #050505;
-      font-weight: 700;
-      font-size: 15px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-decoration: none;
-      white-space: nowrap;
+    /* ── feature panel transition ── */
+    .fp { transition: opacity 0.45s ease, transform 0.45s ease; }
+    .fp.inactive { opacity: 0.2; transform: translateX(-8px); }
+    .fp.active   { opacity: 1; transform: translateX(0); }
+
+    /* ── phone slide ── */
+    .pslide { position: absolute; inset: 0; transition: opacity 0.5s ease, transform 0.5s ease; }
+    .pslide.hidden-slide { opacity: 0; transform: translateY(16px); pointer-events: none; }
+    .pslide.visible-slide { opacity: 1; transform: translateY(0); }
+
+    /* ── animated border ── */
+    @keyframes border-spin {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
     }
-    .btn-primary:hover {
-      background: #D4FF26;
-      transform: translateY(-3px) scale(1.04);
-      box-shadow: 0 8px 30px rgba(183,242,10,0.5);
+    .anim-border {
+      position: relative; border-radius: 24px;
     }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: transparent;
-      color: #FFFFFF;
-      font-weight: 600;
-      font-size: 15px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.18);
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-decoration: none;
-      white-space: nowrap;
+    .anim-border::before {
+      content: ''; position: absolute; inset: -1.5px; border-radius: 25px; z-index: 0;
+      background: linear-gradient(90deg, #B7F20A, #00C7BE, #D4FF26, #B7F20A);
+      background-size: 300% 100%;
+      animation: border-spin 3s linear infinite;
     }
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.35);
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    .anim-border-inner {
+      position: relative; z-index: 1; background: #1C1C1E; border-radius: 22px; height: 100%;
     }
 
-    /* ── Sticky scroll section ── */
-    #features-sticky { position: relative; }
-    .feature-panel { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
-    .feature-panel.active { opacity: 1; transform: translateY(0); }
+    /* ── glow ── */
+    .glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
 
-    /* ── Pricing tilt cards ── */
-    .tilt-card { transform-style: preserve-3d; transition: transform 0.1s linear; }
+    /* ── ticker ── */
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .ticker-inner { animation: ticker 28s linear infinite; display: flex; width: max-content; }
 
-    /* ── Scroll indicator ── */
-    @keyframes scroll-bounce {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50%       { transform: translateY(8px); opacity: 0.4; }
+    /* ── float ── */
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    .float { animation: float 5s ease-in-out infinite; }
+    .float-slow { animation: float 7s ease-in-out infinite 1s; }
+    .float-fast { animation: float 4s ease-in-out infinite 0.5s; }
+
+    /* ── pulse-lime ── */
+    @keyframes pulse-lime {
+      0%,100% { box-shadow: 0 0 18px 4px rgba(183,242,10,0.3); }
+      50%      { box-shadow: 0 0 32px 10px rgba(183,242,10,0.55); }
     }
-    .scroll-indicator { animation: scroll-bounce 1.8s ease-in-out infinite; }
+    .pulse-lime { animation: pulse-lime 2.5s ease-in-out infinite; }
 
-    /* ── Nav backdrop ── */
-    #navbar { transition: background 0.4s, backdrop-filter 0.4s; }
-    #navbar.scrolled {
-      background: rgba(5,5,5,0.85);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+    /* ── tilt ── */
+    .tilt { transform-style: preserve-3d; }
+
+    /* ── card hover ── */
+    .hcard {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
+    .hcard:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-    /* ── Feature icon ring ── */
-    .icon-ring {
-      width: 52px; height: 52px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(183,242,10,0.1);
-      border: 1px solid rgba(183,242,10,0.25);
-    }
+    /* ── navbar scroll ── */
+    #nav { transition: background 0.35s, border-color 0.35s; border-bottom: 1px solid transparent; }
+    #nav.scrolled { background: rgba(5,5,5,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-color: rgba(255,255,255,0.07); }
 
-    /* ── Radial glow ── */
-    .radial-glow {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      pointer-events: none;
-    }
+    /* ── scroll indicator bounce ── */
+    @keyframes bounce2 { 0%,100%{transform:translateY(0);opacity:1} 50%{transform:translateY(7px);opacity:0.4} }
+    .bounce { animation: bounce2 1.8s ease-in-out infinite; }
 
-    /* hidden GSAP init state */
-    .gsap-hidden { opacity: 0; transform: translateY(40px); }
+    /* ── step dot ── */
+    .step-dot { width: 10px; height: 10px; border-radius: 50%; background: #2C2C2E; transition: background 0.3s, transform 0.3s; cursor: pointer; }
+    .step-dot.active { background: #B7F20A; transform: scale(1.3); }
   </style>
 </head>
+<body class="font-inter">
 
-<body class="font-inter bg-av-black text-av-text antialiased">
-
-<!-- ═══════════════════════════════════════════════════════════════
-     NAVBAR
-═══════════════════════════════════════════════════════════════ -->
-<nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<nav id="nav" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
   <div class="max-w-7xl mx-auto flex items-center justify-between">
-    <!-- Logo -->
     <a href="#" class="flex items-center gap-3 group">
-      <div class="w-9 h-9 rounded-xl bg-av-lime flex items-center justify-center shadow-[0_0_20px_rgba(183,242,10,0.4)] group-hover:shadow-[0_0_30px_rgba(183,242,10,0.7)] transition-all duration-300">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-        </svg>
+      <div class="w-9 h-9 rounded-xl bg-av-lime flex items-center justify-center pulse-lime group-hover:scale-110 transition-transform">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </div>
       <span class="font-bold text-lg tracking-tight">Animal <span class="text-av-lime">Vault</span></span>
     </a>
-
-    <!-- Desktop links -->
     <div class="hidden md:flex items-center gap-8 text-sm font-medium text-av-muted">
-      <a href="#features"  class="hover:text-white transition-colors duration-200">Features</a>
-      <a href="#bento"     class="hover:text-white transition-colors duration-200">Why AV</a>
-      <a href="#pricing"   class="hover:text-white transition-colors duration-200">Pricing</a>
+      <a href="#features" class="hover:text-white transition-colors">Features</a>
+      <a href="#whyav"    class="hover:text-white transition-colors">Why AV</a>
+      <a href="#pricing"  class="hover:text-white transition-colors">Pricing</a>
     </div>
-
-    <!-- CTA -->
-    <a href="#pricing" class="btn-primary text-sm py-2.5 px-5">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><polyline points="10 8 16 12 10 16 10 8"/></svg>
-      Get Started Free
-    </a>
+    <a href="#pricing" class="btn-lime text-sm py-2.5 px-5 hidden sm:inline-flex">Get Started Free</a>
   </div>
 </nav>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     HERO SECTION
-═══════════════════════════════════════════════════════════════ -->
-<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-16 px-6">
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="relative min-h-screen flex items-center overflow-hidden grid-bg pt-20">
 
-  <!-- Background radial glows -->
-  <div class="radial-glow w-[600px] h-[600px] bg-av-lime/10 top-[-100px] left-1/2 -translate-x-1/2"></div>
-  <div class="radial-glow w-[400px] h-[400px] bg-av-cyan/8 bottom-[10%] right-[-100px]"></div>
-  <div class="radial-glow w-[300px] h-[300px] bg-av-lime/6 bottom-[5%] left-[-80px]"></div>
+  <!-- background glows -->
+  <div class="glow w-[700px] h-[700px] bg-av-lime/10 top-[-200px] left-1/2 -translate-x-1/2"></div>
+  <div class="glow w-[400px] h-[400px] bg-av-cyan/10 bottom-[-100px] right-[-100px]"></div>
 
-  <!-- Grid lines background -->
-  <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px); background-size: 60px 60px;"></div>
+  <div class="max-w-7xl mx-auto px-6 w-full py-16">
+    <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-  <!-- Badge -->
-  <div id="hero-badge" class="glass-lime rounded-full px-4 py-2 text-xs font-semibold text-av-lime tracking-widest uppercase mb-8 flex items-center gap-2 gsap-hidden">
-    <span class="w-2 h-2 rounded-full bg-av-lime animate-pulse"></span>
-    Now available on iOS &amp; Android
-  </div>
+      <!-- LEFT: Copy -->
+      <div class="flex-1 text-center lg:text-left" id="hero-copy">
+        <div class="pill glass-lime text-av-lime mb-8 inline-flex">
+          <span class="w-2 h-2 rounded-full bg-av-lime animate-pulse"></span>
+          Now on iOS &amp; Android
+        </div>
 
-  <!-- Main headline -->
-  <h1 id="hero-h1" class="text-center font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[96px] leading-[0.92] tracking-tight max-w-5xl mx-auto mb-6 gsap-hidden">
-    The <span class="grad-lime">Operating</span><br />
-    System for<br />
-    <span class="grad-white">Your Farm.</span>
-  </h1>
+        <h1 class="font-black text-5xl sm:text-6xl md:text-7xl leading-[0.9] tracking-tight mb-6">
+          The <span class="grad-lime">Operating<br/>System</span><br/>
+          <span class="grad-white">for Your Farm.</span>
+        </h1>
 
-  <!-- Subheadline -->
-  <p id="hero-sub" class="text-center text-av-muted text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed gsap-hidden">
-    Effortlessly manage your farm with <strong class="text-white font-semibold">real-time stock tracking</strong>, complete health records, and smart AI insights — all in one beautifully simple app.
-  </p>
+        <p class="text-av-muted text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+          Real-time stock tracking, complete health records, smart AI insights, and powerful financial tools — all in one beautifully simple app.
+        </p>
 
-  <!-- CTA Buttons -->
-  <div id="hero-ctas" class="flex flex-col sm:flex-row gap-4 mb-16 gsap-hidden">
-    <a href="#" class="btn-primary animate-pulse-glow">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      Download on App Store
-    </a>
-    <a href="#" class="btn-secondary">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.19l13.12-7.62-2.76-2.76-11.35 10.19zM20.7 10.56L17.94 9 14.65 12l3.29 3.29 2.78-1.61c.79-.46.79-1.66-.02-2.12zM2.2.83C2.08 1.03 2 1.27 2 1.56v20.88c0 .29.08.53.2.73L14.11 12 2.2.83zM4.17.05L17.3 7.67 14.65 10.32 3.29.13C3.63-.04 3.89-.04 4.17.05z"/></svg>
-      Get it on Google Play
-    </a>
-  </div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+          <a href="#" class="btn-lime pulse-lime">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            App Store
+          </a>
+          <a href="#" class="btn-ghost">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.19l13.12-7.62-2.76-2.76-11.35 10.19zM20.7 10.56L17.94 9 14.65 12l3.29 3.29 2.78-1.61c.79-.46.79-1.66-.02-2.12zM2.2.83C2.08 1.03 2 1.27 2 1.56v20.88c0 .29.08.53.2.73L14.11 12 2.2.83zM4.17.05L17.3 7.67 14.65 10.32 3.29.13C3.63-.04 3.89-.04 4.17.05z"/></svg>
+            Google Play
+          </a>
+        </div>
 
-  <!-- Floating Hero Card / Phone mockup -->
-  <div id="hero-phone" class="relative gsap-hidden" style="animation: float 6s ease-in-out infinite;">
-    <!-- Glow ring -->
-    <div class="absolute -inset-6 rounded-[60px] bg-av-lime/10 blur-2xl"></div>
-
-    <div class="phone-frame mx-auto">
-      <div class="phone-notch"></div>
-      <div class="phone-screen flex flex-col">
-        <!-- App UI mock -->
-        <div class="h-full bg-gradient-to-b from-[#111113] to-[#050505] p-5 pt-14">
-          <!-- Status bar mock -->
-          <div class="flex justify-between items-center mb-5">
-            <span class="text-white/40 text-[10px] font-medium">9:41</span>
-            <div class="flex gap-1.5">
-              <div class="w-3 h-2 rounded-sm bg-av-lime/60"></div>
-              <div class="w-3 h-2 rounded-sm bg-av-lime/40"></div>
-              <div class="w-3 h-2 rounded-sm bg-av-lime/20"></div>
-            </div>
+        <!-- Stats row -->
+        <div class="flex flex-wrap gap-8 justify-center lg:justify-start">
+          <div>
+            <p class="text-3xl font-black text-white">17+</p>
+            <p class="text-av-muted text-sm mt-0.5">Languages</p>
           </div>
-
-          <!-- Dashboard header -->
-          <div class="mb-4">
-            <p class="text-av-dim text-[10px] font-medium uppercase tracking-wider">My Farm</p>
-            <h3 class="text-white text-xl font-bold mt-0.5">Good morning 🌿</h3>
+          <div class="w-px bg-av-border"></div>
+          <div>
+            <p class="text-3xl font-black text-white">6</p>
+            <p class="text-av-muted text-sm mt-0.5">Farm Modules</p>
           </div>
-
-          <!-- Quick stats -->
-          <div class="grid grid-cols-2 gap-2 mb-4">
-            <div class="glass rounded-2xl p-3">
-              <p class="text-av-dim text-[9px] uppercase tracking-wide mb-1">Animals</p>
-              <p class="text-av-lime text-xl font-black">247</p>
-            </div>
-            <div class="glass rounded-2xl p-3">
-              <p class="text-av-dim text-[9px] uppercase tracking-wide mb-1">Revenue</p>
-              <p class="text-av-cyan text-xl font-black">$8.4k</p>
-            </div>
+          <div class="w-px bg-av-border"></div>
+          <div>
+            <p class="text-3xl font-black text-av-lime">Free</p>
+            <p class="text-av-muted text-sm mt-0.5">To Start</p>
           </div>
+        </div>
+      </div>
 
-          <!-- Health alert -->
-          <div class="rounded-2xl p-3 mb-3" style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.25)">
-            <div class="flex items-center gap-2">
-              <div class="w-2 h-2 rounded-full bg-av-red animate-pulse"></div>
-              <p class="text-[10px] text-av-red font-semibold">3 animals need attention</p>
-            </div>
+      <!-- RIGHT: Phone mockup -->
+      <div class="relative flex-shrink-0" id="hero-phone">
+        <!-- outer glow ring -->
+        <div class="absolute -inset-8 rounded-[60px] bg-av-lime/8 blur-3xl"></div>
+
+        <!-- floating badges -->
+        <div class="absolute -left-36 top-20 glass rounded-2xl px-4 py-3 flex items-center gap-3 float whitespace-nowrap z-10">
+          <span class="text-2xl">🌿</span>
+          <div>
+            <p class="text-white text-xs font-bold">247 Animals</p>
+            <p class="text-av-muted text-[11px]">Tracked live</p>
           </div>
+        </div>
+        <div class="absolute -right-32 top-36 glass rounded-2xl px-4 py-3 flex items-center gap-3 float-slow whitespace-nowrap z-10">
+          <span class="text-2xl">✦</span>
+          <div>
+            <p class="text-white text-xs font-bold">AI Insights</p>
+            <p class="text-av-muted text-[11px]">Gemini powered</p>
+          </div>
+        </div>
+        <div class="absolute -left-28 bottom-28 glass rounded-2xl px-4 py-3 flex items-center gap-3 float-fast whitespace-nowrap z-10">
+          <span class="text-2xl">☁️</span>
+          <div>
+            <p class="text-white text-xs font-bold">Cloud Sync</p>
+            <p class="text-av-muted text-[11px]">Supabase powered</p>
+          </div>
+        </div>
 
-          <!-- AI insight -->
-          <div class="glass-lime rounded-2xl p-3">
-            <div class="flex items-center gap-2 mb-1.5">
-              <div class="w-4 h-4 rounded-full bg-av-lime/20 flex items-center justify-center">
-                <span class="text-[8px]">✦</span>
+        <!-- phone -->
+        <div class="phone float mx-auto">
+          <div class="phone-notch"></div>
+          <!-- screen content -->
+          <div class="absolute inset-0 flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4">
+
+            <!-- header -->
+            <div class="mb-4">
+              <p class="text-av-muted text-[10px] uppercase tracking-widest">My Farm</p>
+              <h3 class="text-white text-xl font-black mt-0.5">Good morning 🌿</h3>
+            </div>
+
+            <!-- stat cards -->
+            <div class="grid grid-cols-2 gap-2 mb-3">
+              <div class="glass rounded-2xl p-3">
+                <p class="text-av-muted text-[9px] uppercase tracking-wide">Animals</p>
+                <p class="text-av-lime text-2xl font-black mt-1">247</p>
               </div>
-              <p class="text-[9px] text-av-lime font-semibold uppercase tracking-wide">AI Insight</p>
+              <div class="glass rounded-2xl p-3">
+                <p class="text-av-muted text-[9px] uppercase tracking-wide">Revenue</p>
+                <p class="text-av-cyan text-2xl font-black mt-1">$8.4k</p>
+              </div>
             </div>
-            <p class="text-[10px] text-av-muted leading-relaxed">Consider vaccinating your sheep herd this week based on seasonal patterns.</p>
+
+            <!-- alert -->
+            <div class="rounded-2xl p-3 mb-3" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-av-red animate-pulse flex-shrink-0"></div>
+                <p class="text-[11px] text-av-red font-semibold">3 animals need attention</p>
+              </div>
+            </div>
+
+            <!-- animal list -->
+            <div class="space-y-2 mb-3">
+              <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-base">🐄</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-white text-[11px] font-semibold truncate">Bessie #A-104</p>
+                  <p class="text-av-muted text-[10px]">Hereford · 3 yrs</p>
+                </div>
+                <div class="w-2 h-2 rounded-full bg-av-green flex-shrink-0"></div>
+              </div>
+              <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-slate-500/20 flex items-center justify-center text-base">🐑</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-white text-[11px] font-semibold truncate">Lamb #S-021</p>
+                  <p class="text-av-muted text-[10px]">Merino · 8 mo</p>
+                </div>
+                <div class="w-2 h-2 rounded-full bg-av-green flex-shrink-0"></div>
+              </div>
+            </div>
+
+            <!-- AI card -->
+            <div class="glass-lime rounded-2xl p-3 mt-auto">
+              <div class="flex items-center gap-2 mb-1.5">
+                <div class="w-4 h-4 rounded-full bg-av-lime/20 flex items-center justify-center">
+                  <span class="text-[8px] text-av-lime font-bold">✦</span>
+                </div>
+                <p class="text-[9px] text-av-lime font-bold uppercase tracking-wider">AI Insight</p>
+              </div>
+              <p class="text-[10px] text-av-muted leading-relaxed">Schedule vaccination for your sheep herd this week based on seasonal patterns.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Floating badges -->
-    <div class="absolute -left-20 top-24 glass rounded-2xl px-3 py-2 flex items-center gap-2 whitespace-nowrap animate-[float_5s_ease-in-out_infinite_1s]">
-      <span class="text-av-green text-lg">✦</span>
-      <div>
-        <p class="text-white text-xs font-bold">247 Animals</p>
-        <p class="text-av-dim text-[10px]">Tracked live</p>
-      </div>
-    </div>
-    <div class="absolute -right-24 bottom-32 glass rounded-2xl px-3 py-2 flex items-center gap-2 whitespace-nowrap animate-[float_7s_ease-in-out_infinite_0.5s]">
-      <span class="text-av-lime text-lg">⚡</span>
-      <div>
-        <p class="text-white text-xs font-bold">AI Insights</p>
-        <p class="text-av-dim text-[10px]">Powered by Gemini</p>
-      </div>
-    </div>
-    <div class="absolute -left-16 bottom-20 glass rounded-2xl px-3 py-2 flex items-center gap-2 whitespace-nowrap animate-[float_8s_ease-in-out_infinite_2s]">
-      <span class="text-av-cyan text-lg">🌍</span>
-      <div>
-        <p class="text-white text-xs font-bold">17+ Languages</p>
-        <p class="text-av-dim text-[10px]">Global support</p>
-      </div>
-    </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 scroll-indicator">
-    <p class="text-av-dim text-xs tracking-widest uppercase">Scroll to explore</p>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M7 13l5 5 5-5"/><path d="M7 6l5 5 5-5"/></svg>
+  <!-- scroll cue -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 bounce">
+    <p class="text-av-dim text-[11px] tracking-widest uppercase">Scroll</p>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M7 13l5 5 5-5"/><path d="M7 6l5 5 5-5"/></svg>
   </div>
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SOCIAL PROOF TICKER
-═══════════════════════════════════════════════════════════════ -->
-<div class="relative border-y border-av-border py-4 overflow-hidden bg-av-surface2">
-  <div class="flex gap-12 items-center animate-[border-flow_20s_linear_infinite] whitespace-nowrap" style="animation:scroll-ticker 22s linear infinite;width:max-content">
-    <script>/* ticker items rendered below via JS */</script>
-    <!-- Fallback static -->
-    <div class="flex gap-12 items-center" id="ticker-inner">
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Real-time livestock tracking</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> AI-powered vet recommendations</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> 17+ languages supported</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Cloud sync via Supabase</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Offline-ready architecture</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Apple &amp; Google sign-in</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Real-time livestock tracking</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> AI-powered vet recommendations</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> 17+ languages supported</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Cloud sync via Supabase</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Offline-ready architecture</span>
-      <span class="text-av-dim text-sm font-medium flex items-center gap-2"><span class="text-av-lime">✦</span> Apple &amp; Google sign-in</span>
+<!-- ═══════════════════════════ TICKER ═══════════════════════════ -->
+<div class="border-y border-av-border py-4 overflow-hidden bg-av-surface">
+  <div class="ticker-inner">
+    <!-- repeated twice for seamless loop -->
+    <div class="flex gap-10 items-center pr-10">
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Real-time livestock tracking</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> AI vet recommendations</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> 17+ languages supported</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Cloud sync via Supabase</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Offline-ready architecture</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Apple &amp; Google sign-in</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Breeding &amp; pedigree tracking</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Financial reports &amp; daybook</span>
+    </div>
+    <div class="flex gap-10 items-center pr-10">
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Real-time livestock tracking</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> AI vet recommendations</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> 17+ languages supported</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Cloud sync via Supabase</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Offline-ready architecture</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Apple &amp; Google sign-in</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Breeding &amp; pedigree tracking</span>
+      <span class="text-av-muted text-sm font-medium flex items-center gap-2 whitespace-nowrap"><span class="text-av-lime font-bold">✦</span> Financial reports &amp; daybook</span>
     </div>
   </div>
-  <style>
-    @keyframes scroll-ticker {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    #ticker-inner { animation: scroll-ticker 28s linear infinite; }
-  </style>
 </div>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     HOW IT WORKS — STICKY SCROLL
-═══════════════════════════════════════════════════════════════ -->
-<section id="features" class="relative">
+<!-- ═══════════════════════════ FEATURES SECTION ═══════════════════════════ -->
+<section id="features" class="py-24 px-6 relative overflow-hidden">
+  <div class="glow w-[500px] h-[500px] bg-av-lime/8 top-0 left-1/2 -translate-x-1/2"></div>
 
-  <!-- Section label -->
-  <div class="text-center py-20 px-6">
-    <div class="inline-flex items-center gap-2 glass-lime rounded-full px-4 py-2 text-xs font-semibold text-av-lime tracking-widest uppercase mb-6 gsap-hidden" data-gsap="fade-up">
-      <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
-      Core Features
+  <div class="max-w-7xl mx-auto">
+
+    <!-- header -->
+    <div class="text-center mb-16 reveal">
+      <div class="pill glass-lime text-av-lime mb-6 inline-flex">
+        <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
+        Core Features
+      </div>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight">
+        Everything you need,<br /><span class="grad-lime">nothing you don't.</span>
+      </h2>
+      <p class="text-av-muted text-lg mt-4 max-w-xl mx-auto">Four pillars of powerful farm management — designed to be fast, simple, and obsessively useful.</p>
     </div>
-    <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight max-w-3xl mx-auto gsap-hidden" data-gsap="fade-up">
-      Everything you need,<br /><span class="grad-lime">nothing you don't.</span>
-    </h2>
-    <p class="text-av-muted text-lg mt-5 max-w-xl mx-auto gsap-hidden" data-gsap="fade-up">
-      Four pillars of powerful farm management, designed for farmers who value clarity and control.
-    </p>
-  </div>
 
-  <!-- Sticky container -->
-  <div id="features-sticky" class="relative">
+    <!-- sticky feature layout -->
+    <div class="relative">
+      <div class="flex flex-col lg:flex-row gap-12 lg:gap-20">
 
-    <!-- The sticky wrapper -->
-    <div id="sticky-wrapper" class="lg:sticky lg:top-0 lg:h-screen flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-6 py-12 lg:py-0 overflow-hidden">
+        <!-- phone (sticky on desktop) -->
+        <div class="hidden lg:flex flex-col items-center" style="position: sticky; top: 120px; align-self: flex-start; height: fit-content;">
+          <div class="phone" id="feat-phone" style="height: 500px; width: 250px;">
+            <div class="phone-notch"></div>
 
-      <!-- Left: Phone frame -->
-      <div class="relative flex-shrink-0">
-        <div class="absolute -inset-8 rounded-[70px] bg-av-lime/8 blur-3xl"></div>
-        <div class="phone-frame" id="feature-phone">
-          <div class="phone-notch"></div>
-          <div class="phone-screen" id="phone-screen-content">
-            <!-- Screen 0: Inventory & Photos -->
-            <div class="phone-screen-slide absolute inset-0 flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] p-5 pt-14" data-slide="0">
-              <p class="text-av-dim text-[10px] uppercase tracking-wider mb-3">Inventory</p>
-              <div class="space-y-2">
-                <div class="glass rounded-2xl p-3 flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400/30 to-orange-500/20 flex items-center justify-center text-lg">🐄</div>
-                  <div class="flex-1">
-                    <p class="text-white text-xs font-semibold">Bessie #A-104</p>
-                    <p class="text-av-dim text-[10px]">Hereford · 3 yrs</p>
-                  </div>
+            <!-- Slide 0: Inventory -->
+            <div class="pslide visible-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-0">
+              <p class="text-av-muted text-[9px] uppercase tracking-widest mb-3">Inventory &amp; Photos</p>
+              <div class="space-y-2 mb-3">
+                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 flex items-center justify-center text-lg flex-shrink-0">🐄</div>
+                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Bessie #A-104</p><p class="text-av-muted text-[10px]">Hereford · 3 yrs</p></div>
                   <div class="w-2 h-2 rounded-full bg-av-green"></div>
                 </div>
-                <div class="glass rounded-2xl p-3 flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-400/30 to-slate-500/20 flex items-center justify-center text-lg">🐑</div>
-                  <div class="flex-1">
-                    <p class="text-white text-xs font-semibold">Lamb #S-021</p>
-                    <p class="text-av-dim text-[10px]">Merino · 8 mo</p>
-                  </div>
+                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-slate-500/20 flex items-center justify-center text-lg flex-shrink-0">🐑</div>
+                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Lamb #S-021</p><p class="text-av-muted text-[10px]">Merino · 8 mo</p></div>
                   <div class="w-2 h-2 rounded-full bg-av-green"></div>
                 </div>
-                <div class="glass rounded-2xl p-3 flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-400/30 to-rose-500/20 flex items-center justify-center text-lg">🐖</div>
-                  <div class="flex-1">
-                    <p class="text-white text-xs font-semibold">Piglet #P-008</p>
-                    <p class="text-av-dim text-[10px]">Duroc · 4 mo</p>
-                  </div>
+                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-pink-500/20 flex items-center justify-center text-lg flex-shrink-0">🐖</div>
+                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Piglet #P-008</p><p class="text-av-muted text-[10px]">Duroc · 4 mo</p></div>
                   <div class="w-2 h-2 rounded-full bg-av-orange animate-pulse"></div>
                 </div>
+                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-lg flex-shrink-0">🐐</div>
+                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Nanny #G-033</p><p class="text-av-muted text-[10px]">Boer · 2 yrs</p></div>
+                  <div class="w-2 h-2 rounded-full bg-av-green"></div>
+                </div>
               </div>
-              <div class="mt-3 glass-lime rounded-2xl p-3 text-center">
-                <p class="text-av-lime text-lg font-black">247</p>
-                <p class="text-av-dim text-[10px]">Total animals tracked</p>
+              <div class="glass-lime rounded-2xl p-3 mt-auto text-center">
+                <p class="text-av-lime text-2xl font-black">247</p>
+                <p class="text-av-muted text-[10px]">Total animals tracked</p>
               </div>
             </div>
 
-            <!-- Screen 1: Health -->
-            <div class="phone-screen-slide absolute inset-0 flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] p-5 pt-14 opacity-0" data-slide="1">
-              <p class="text-av-dim text-[10px] uppercase tracking-wider mb-3">Health Records</p>
-              <div class="space-y-2">
-                <div class="rounded-2xl p-3" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)">
-                  <div class="flex items-center gap-2 mb-1"><div class="w-2 h-2 rounded-full bg-av-red animate-pulse"></div><p class="text-av-red text-[10px] font-bold">Urgent</p></div>
-                  <p class="text-white text-xs font-semibold">Bessie needs vaccination</p>
-                  <p class="text-av-dim text-[10px] mt-0.5">FMD booster — overdue 2 days</p>
+            <!-- Slide 1: Health -->
+            <div class="pslide hidden-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-1">
+              <p class="text-av-muted text-[9px] uppercase tracking-widest mb-3">Health Records</p>
+              <div class="space-y-2 mb-3">
+                <div class="rounded-xl p-3" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2)">
+                  <div class="flex items-center gap-2 mb-1"><div class="w-1.5 h-1.5 rounded-full bg-av-red animate-pulse"></div><p class="text-av-red text-[10px] font-bold">URGENT</p></div>
+                  <p class="text-white text-[11px] font-semibold">Bessie — FMD booster overdue</p>
+                  <p class="text-av-muted text-[10px] mt-0.5">2 days overdue · Hereford</p>
                 </div>
-                <div class="glass rounded-2xl p-3">
-                  <p class="text-av-dim text-[9px] uppercase tracking-wide mb-1">Last treatment</p>
-                  <p class="text-white text-xs font-semibold">Antibiotic — Lamb #S-021</p>
-                  <p class="text-av-dim text-[10px]">2 days ago · Dr. Ahmed</p>
+                <div class="glass rounded-xl p-2.5">
+                  <p class="text-av-muted text-[9px] uppercase tracking-wide mb-1">Last treatment</p>
+                  <p class="text-white text-[11px] font-semibold">Antibiotic — Lamb #S-021</p>
+                  <p class="text-av-muted text-[10px]">3 days ago · Dr. Ahmed</p>
                 </div>
-                <div class="glass rounded-2xl p-3">
-                  <p class="text-av-dim text-[9px] uppercase tracking-wide mb-2">Vitals trend</p>
-                  <div class="flex items-end gap-1 h-8">
-                    <div class="flex-1 bg-av-lime/30 rounded-sm" style="height:40%"></div>
-                    <div class="flex-1 bg-av-lime/50 rounded-sm" style="height:60%"></div>
-                    <div class="flex-1 bg-av-lime/70 rounded-sm" style="height:80%"></div>
-                    <div class="flex-1 bg-av-lime rounded-sm" style="height:100%"></div>
-                    <div class="flex-1 bg-av-lime/80 rounded-sm" style="height:90%"></div>
-                    <div class="flex-1 bg-av-lime/60 rounded-sm" style="height:70%"></div>
-                    <div class="flex-1 bg-av-lime/90 rounded-sm" style="height:95%"></div>
+                <div class="glass rounded-xl p-2.5">
+                  <p class="text-av-muted text-[9px] uppercase tracking-wide mb-2">Health trend (7d)</p>
+                  <div class="flex items-end gap-1 h-10">
+                    <div class="flex-1 rounded-t" style="height:40%;background:rgba(183,242,10,0.3)"></div>
+                    <div class="flex-1 rounded-t" style="height:55%;background:rgba(183,242,10,0.45)"></div>
+                    <div class="flex-1 rounded-t" style="height:70%;background:rgba(183,242,10,0.6)"></div>
+                    <div class="flex-1 rounded-t" style="height:85%;background:rgba(183,242,10,0.75)"></div>
+                    <div class="flex-1 rounded-t" style="height:65%;background:rgba(239,68,68,0.6)"></div>
+                    <div class="flex-1 rounded-t" style="height:80%;background:rgba(183,242,10,0.8)"></div>
+                    <div class="flex-1 rounded-t" style="height:100%;background:#B7F20A"></div>
                   </div>
                 </div>
               </div>
+              <div class="glass rounded-xl p-2.5 mt-auto flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-av-green/20 flex items-center justify-center flex-shrink-0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                <p class="text-av-muted text-[10px]">94% of herd in good health</p>
+              </div>
             </div>
 
-            <!-- Screen 2: Finance -->
-            <div class="phone-screen-slide absolute inset-0 flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] p-5 pt-14 opacity-0" data-slide="2">
-              <p class="text-av-dim text-[10px] uppercase tracking-wider mb-3">Finance</p>
+            <!-- Slide 2: Finance -->
+            <div class="pslide hidden-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-2">
+              <p class="text-av-muted text-[9px] uppercase tracking-widest mb-3">Finance &amp; Procurement</p>
               <div class="grid grid-cols-2 gap-2 mb-3">
-                <div class="glass rounded-2xl p-3 text-center">
-                  <p class="text-av-cyan text-base font-black">$8,420</p>
-                  <p class="text-av-dim text-[9px]">Revenue</p>
+                <div class="glass rounded-xl p-2.5 text-center">
+                  <p class="text-av-cyan text-xl font-black">$8.4k</p>
+                  <p class="text-av-muted text-[9px]">Revenue</p>
                 </div>
-                <div class="glass rounded-2xl p-3 text-center">
-                  <p class="text-av-red text-base font-black">$3,150</p>
-                  <p class="text-av-dim text-[9px]">Expenses</p>
+                <div class="glass rounded-xl p-2.5 text-center">
+                  <p class="text-av-red text-xl font-black">$3.1k</p>
+                  <p class="text-av-muted text-[9px]">Expenses</p>
                 </div>
               </div>
-              <div class="glass rounded-2xl p-3 mb-2">
-                <div class="flex justify-between mb-2"><p class="text-[10px] text-av-dim">Profit margin</p><p class="text-[10px] text-av-green font-bold">62.6%</p></div>
-                <div class="w-full h-2 bg-white/10 rounded-full"><div class="h-full bg-av-lime rounded-full" style="width:62.6%"></div></div>
+              <div class="glass rounded-xl p-2.5 mb-2">
+                <div class="flex justify-between mb-1.5"><p class="text-[10px] text-av-muted">Profit margin</p><p class="text-[10px] text-av-green font-bold">63%</p></div>
+                <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.08)"><div class="h-full rounded-full bg-av-lime" style="width:63%"></div></div>
               </div>
-              <div class="space-y-1.5">
-                <div class="flex justify-between items-center"><span class="text-[10px] text-av-dim">Sale — 4 cattle</span><span class="text-[10px] text-av-green font-semibold">+$2,400</span></div>
-                <div class="flex justify-between items-center"><span class="text-[10px] text-av-dim">Feed purchase</span><span class="text-[10px] text-av-red font-semibold">-$380</span></div>
-                <div class="flex justify-between items-center"><span class="text-[10px] text-av-dim">Vet fees</span><span class="text-[10px] text-av-red font-semibold">-$120</span></div>
+              <div class="space-y-1.5 mb-3">
+                <div class="flex justify-between items-center glass rounded-xl px-2.5 py-2">
+                  <span class="text-[10px] text-av-muted">Sale — 4 cattle</span>
+                  <span class="text-[10px] text-av-green font-bold">+$2,400</span>
+                </div>
+                <div class="flex justify-between items-center glass rounded-xl px-2.5 py-2">
+                  <span class="text-[10px] text-av-muted">Feed purchase</span>
+                  <span class="text-[10px] text-av-red font-bold">−$380</span>
+                </div>
+                <div class="flex justify-between items-center glass rounded-xl px-2.5 py-2">
+                  <span class="text-[10px] text-av-muted">Vet fees</span>
+                  <span class="text-[10px] text-av-red font-bold">−$120</span>
+                </div>
+              </div>
+              <div class="glass-lime rounded-xl px-2.5 py-2 mt-auto text-center">
+                <p class="text-av-lime text-[10px] font-semibold">$5.3k net profit this month</p>
               </div>
             </div>
 
-            <!-- Screen 3: AI Insights -->
-            <div class="phone-screen-slide absolute inset-0 flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] p-5 pt-14 opacity-0" data-slide="3">
+            <!-- Slide 3: AI -->
+            <div class="pslide hidden-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-3">
               <div class="flex items-center gap-2 mb-4">
-                <div class="w-8 h-8 rounded-xl bg-av-lime/20 border border-av-lime/30 flex items-center justify-center">
-                  <span class="text-sm">✦</span>
+                <div class="w-8 h-8 rounded-xl bg-av-lime/20 border border-av-lime/30 flex items-center justify-center flex-shrink-0">
+                  <span class="text-av-lime text-sm font-bold">✦</span>
                 </div>
                 <div>
-                  <p class="text-white text-xs font-bold">AI Farm Assistant</p>
-                  <p class="text-av-dim text-[10px]">Powered by Gemini</p>
+                  <p class="text-white text-[11px] font-bold">AI Farm Assistant</p>
+                  <p class="text-av-muted text-[10px]">Powered by Gemini</p>
                 </div>
               </div>
-              <div class="glass-lime rounded-2xl p-3 mb-3">
-                <p class="text-av-lime text-[10px] font-semibold mb-1.5">💡 Vet Recommendation</p>
-                <p class="text-av-muted text-[10px] leading-relaxed">Based on the death records and current season, consider scheduling a respiratory disease vaccination for your cattle herd within the next 2 weeks.</p>
+              <div class="space-y-2">
+                <div class="glass-lime rounded-xl p-2.5">
+                  <p class="text-av-lime text-[9px] font-bold uppercase tracking-wide mb-1">💡 Vet Recommendation</p>
+                  <p class="text-av-muted text-[10px] leading-relaxed">Schedule respiratory vaccinations for your cattle herd within 2 weeks — seasonal risk is elevated.</p>
+                </div>
+                <div class="glass rounded-xl p-2.5">
+                  <p class="text-av-dim text-[9px] font-bold uppercase tracking-wide mb-1">📊 Financial Insight</p>
+                  <p class="text-av-muted text-[10px] leading-relaxed">Feed costs are 18% above last quarter. Bulk procurement could save ~$640/month.</p>
+                </div>
+                <div class="glass rounded-xl p-2.5">
+                  <p class="text-av-dim text-[9px] font-bold uppercase tracking-wide mb-1">🔬 Mortality Analysis</p>
+                  <p class="text-av-muted text-[10px] leading-relaxed">2 recent losses show signs of bloat. Review feed schedule and consider preventive treatment.</p>
+                </div>
               </div>
-              <div class="glass rounded-2xl p-3 mb-3">
-                <p class="text-av-dim text-[10px] font-semibold mb-1.5">📊 Financial Insight</p>
-                <p class="text-av-muted text-[10px] leading-relaxed">Your feed costs are 18% above last quarter's average. Switching to bulk procurement could save ~$640/month.</p>
-              </div>
-              <div class="mt-auto">
-                <div class="flex items-center gap-2 glass rounded-2xl px-3 py-2">
-                  <span class="text-[10px] text-av-dim flex-1">Ask your AI assistant…</span>
-                  <div class="w-6 h-6 rounded-lg bg-av-lime flex items-center justify-center">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="3"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-                  </div>
+              <div class="mt-auto glass rounded-xl flex items-center gap-2 px-3 py-2">
+                <span class="text-av-dim text-[10px] flex-1">Ask your AI assistant…</span>
+                <div class="w-6 h-6 rounded-lg bg-av-lime flex items-center justify-center">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="3"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Right: Feature text panels (scrolls through on desktop, stacked on mobile) -->
-      <div class="flex flex-col gap-0 max-w-lg w-full" id="feature-panels">
-
-        <div class="feature-panel active py-10 lg:py-16" data-panel="0">
-          <div class="icon-ring mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <!-- step dots -->
+          <div class="flex gap-3 mt-6">
+            <div class="step-dot active" id="dot-0" onclick="goToSlide(0)"></div>
+            <div class="step-dot" id="dot-1" onclick="goToSlide(1)"></div>
+            <div class="step-dot" id="dot-2" onclick="goToSlide(2)"></div>
+            <div class="step-dot" id="dot-3" onclick="goToSlide(3)"></div>
           </div>
-          <div class="inline-flex items-center gap-2 bg-white/5 rounded-full px-3 py-1 text-xs font-medium text-av-muted mb-4">01 / 04</div>
-          <h3 class="text-3xl sm:text-4xl font-black tracking-tight mb-4 text-white">Inventory <br /><span class="grad-lime">&amp; Photos</span></h3>
-          <p class="text-av-muted text-lg leading-relaxed mb-6">Snap, save, and organize your entire herd instantly. Add animals with photos, custom tags, breeds, and weights — then find any record in seconds with powerful search and filters.</p>
-          <ul class="space-y-3">
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-av-lime/20 border border-av-lime/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Photo-first animal profiles with custom tags</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-av-lime/20 border border-av-lime/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>QR/barcode scanner for fast animal lookup</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-av-lime/20 border border-av-lime/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Bulk actions: sell, mark dead, transfer herd</li>
-          </ul>
         </div>
 
-        <div class="feature-panel py-10 lg:py-16" data-panel="1">
-          <div class="icon-ring mb-5" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <div class="inline-flex items-center gap-2 bg-white/5 rounded-full px-3 py-1 text-xs font-medium text-av-muted mb-4">02 / 04</div>
-          <h3 class="text-3xl sm:text-4xl font-black tracking-tight mb-4 text-white">Health <br /><span class="text-av-red">&amp; Mortality</span></h3>
-          <p class="text-av-muted text-lg leading-relaxed mb-6">Keep your livestock thriving with real-time medical tracking. Log vaccinations, treatments, medications, and food stock — with vital alerts that notify you before problems escalate.</p>
-          <ul class="space-y-3">
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-red-500/20 border border-red-500/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Full vaccination &amp; treatment history per animal</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-red-500/20 border border-red-500/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Mortality logs with AI-analyzed cause of death</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-red-500/20 border border-red-500/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Push alerts for overdue treatments &amp; low stock</li>
-          </ul>
-        </div>
+        <!-- feature text panels -->
+        <div class="flex-1 space-y-0" id="feat-panels">
 
-        <div class="feature-panel py-10 lg:py-16" data-panel="2">
-          <div class="icon-ring mb-5" style="background:rgba(0,199,190,0.1);border-color:rgba(0,199,190,0.25)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          <!-- panel 0 -->
+          <div class="fp active py-16 border-l border-av-border pl-8 reveal" data-feat="0">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <span class="text-av-dim text-xs font-medium uppercase tracking-widest">01 / 04</span>
+            <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">Inventory<br/><span class="grad-lime">&amp; Photos</span></h3>
+            <p class="text-av-muted text-lg leading-relaxed mb-6">Snap, save, and organize your entire herd instantly. Add animals with photos, custom tags, breeds, and weights — then find any record in seconds with powerful search and filters.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Photo-first animal profiles with custom tags &amp; categories
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                QR &amp; barcode scanner for instant animal lookup
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Bulk actions: sell, mark dead, transfer between farms
+              </li>
+            </ul>
           </div>
-          <div class="inline-flex items-center gap-2 bg-white/5 rounded-full px-3 py-1 text-xs font-medium text-av-muted mb-4">03 / 04</div>
-          <h3 class="text-3xl sm:text-4xl font-black tracking-tight mb-4 text-white">Finance <br /><span class="text-av-cyan">&amp; Procurement</span></h3>
-          <p class="text-av-muted text-lg leading-relaxed mb-6">Protect your bottom line with seamless financial logs. Track expenses, revenue, buyer ledgers, and procurement — with daily reports that give you a crystal-clear picture of your farm's financial health.</p>
-          <ul class="space-y-3">
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Daybook, buyer ledger &amp; receivables tracking</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Procurement orders, suppliers &amp; transport costs</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Combined reports: inventory + financial in one view</li>
-          </ul>
-        </div>
 
-        <div class="feature-panel py-10 lg:py-16" data-panel="3">
-          <div class="icon-ring mb-5" style="background:rgba(183,242,10,0.15);border-color:rgba(183,242,10,0.4)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <!-- panel 1 -->
+          <div class="fp inactive py-16 border-l border-av-border pl-8 reveal" data-feat="1">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <span class="text-av-dim text-xs font-medium uppercase tracking-widest">02 / 04</span>
+            <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">Health<br/><span class="text-av-red">&amp; Mortality</span></h3>
+            <p class="text-av-muted text-lg leading-relaxed mb-6">Keep your livestock thriving with real-time medical tracking. Log vaccinations, treatments, medications, and food stock — with vital alerts before problems escalate.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Full vaccination &amp; treatment history per animal
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Mortality logs with AI-analyzed cause of death
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Push alerts for overdue treatments &amp; low medication stock
+              </li>
+            </ul>
           </div>
-          <div class="inline-flex items-center gap-2 bg-white/5 rounded-full px-3 py-1 text-xs font-medium text-av-muted mb-4">04 / 04</div>
-          <h3 class="text-3xl sm:text-4xl font-black tracking-tight mb-4 text-white">AI Insights<br /><span class="grad-lime">by Gemini</span></h3>
-          <p class="text-av-muted text-lg leading-relaxed mb-6">Your 24/7 AI Farm Assistant. Get instant vet recommendations, financial analytics, and decision-making support — all powered by Google Gemini and personalized to your exact herd and farm data.</p>
-          <ul class="space-y-3">
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-av-lime/20 border border-av-lime/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Personalized recommendations from your farm data</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-av-lime/20 border border-av-lime/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Responds in your language — all 17+ supported</li>
-            <li class="flex items-start gap-3 text-av-muted text-sm"><span class="w-5 h-5 rounded-full bg-av-lime/20 border border-av-lime/30 flex-shrink-0 flex items-center justify-center mt-0.5"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Mortality analysis, financial coaching &amp; more</li>
-          </ul>
-        </div>
+
+          <!-- panel 2 -->
+          <div class="fp inactive py-16 border-l border-av-border pl-8 reveal" data-feat="2">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+            <span class="text-av-dim text-xs font-medium uppercase tracking-widest">03 / 04</span>
+            <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">Finance<br/><span class="text-av-cyan">&amp; Procurement</span></h3>
+            <p class="text-av-muted text-lg leading-relaxed mb-6">Protect your bottom line with seamless financial logs. Track expenses, revenue, buyer ledgers, and orders — with daily reports that give you a crystal-clear picture of profitability.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Daybook, buyer ledger &amp; receivables in one place
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Procurement orders, suppliers &amp; transport tracking
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Combined inventory + financial reports in one view
+              </li>
+            </ul>
+          </div>
+
+          <!-- panel 3 -->
+          <div class="fp inactive py-16 border-l border-av-border pl-8 reveal" data-feat="3">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.35)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span class="text-av-dim text-xs font-medium uppercase tracking-widest">04 / 04</span>
+            <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">AI Insights<br/><span class="grad-lime">by Gemini</span></h3>
+            <p class="text-av-muted text-lg leading-relaxed mb-6">Your 24/7 AI Farm Assistant. Get instant vet recommendations, financial analytics, and smart decisions — powered by Google Gemini and personalized to your exact farm data.</p>
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Personalized insights from your live farm data
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Responds in your language — all 17+ supported
+              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm">
+                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                Mortality analysis, financial coaching &amp; vet care tips
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /feat-panels -->
       </div>
     </div>
-
-    <!-- Scroll spacer for sticky (desktop only) -->
-    <div class="hidden lg:block" style="height: 300vh;" id="features-scroll-spacer"></div>
   </div>
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     BENTO BOX SECTION
-═══════════════════════════════════════════════════════════════ -->
-<section id="bento" class="py-24 px-6 relative overflow-hidden">
-
-  <div class="radial-glow w-[500px] h-[500px] bg-av-cyan/8 top-1/2 -translate-y-1/2 right-[-150px]"></div>
+<!-- ═══════════════════════════ WHY AV / BENTO ═══════════════════════════ -->
+<section id="whyav" class="py-24 px-6 relative overflow-hidden">
+  <div class="glow w-[500px] h-[500px] bg-av-cyan/8 top-1/2 -translate-y-1/2 right-[-150px]"></div>
 
   <div class="max-w-6xl mx-auto">
-
-    <!-- Header -->
-    <div class="mb-12 max-w-2xl">
-      <div class="inline-flex items-center gap-2 glass-lime rounded-full px-4 py-2 text-xs font-semibold text-av-lime tracking-widest uppercase mb-6 gsap-hidden" data-gsap="fade-up">
-        <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
-        Built Different
-      </div>
-      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight gsap-hidden" data-gsap="fade-up">
-        Every detail,<br /><span class="grad-lime">obsessed over.</span>
-      </h2>
+    <div class="mb-12 reveal">
+      <div class="pill glass-lime text-av-lime mb-6 inline-flex"><span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>Built Different</div>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight">Every detail,<br/><span class="grad-lime">obsessed over.</span></h2>
     </div>
 
-    <!-- Bento grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="bento-grid">
 
-      <!-- Card 1: Large — Language support -->
-      <div class="bento-card md:col-span-2 glass rounded-3xl p-8 relative overflow-hidden group hover:border-av-lime/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]" style="border-color:#2C2C2E">
-        <div class="radial-glow w-40 h-40 bg-av-lime/10 -top-10 -right-10"></div>
-        <div class="icon-ring mb-5 w-14 h-14 rounded-2xl">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <!-- card: languages (2-col span) -->
+      <div class="lg:col-span-2 glass rounded-3xl p-8 hcard reveal" style="border:1px solid #2C2C2E">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
         </div>
         <h3 class="text-2xl font-black mb-3">Global Support</h3>
-        <p class="text-av-muted leading-relaxed mb-6">Animal Vault speaks your language — literally. Available in <strong class="text-av-lime">17+ languages</strong> with custom country settings, currency, and regional themes.</p>
+        <p class="text-av-muted mb-5 leading-relaxed">Available in <strong class="text-av-lime">17+ languages</strong> with custom country settings, currency, and regional themes. Your farm app, your language.</p>
         <div class="flex flex-wrap gap-2">
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇬🇧 English</span>
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇸🇦 Arabic</span>
@@ -762,86 +706,76 @@
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇮🇳 Hindi</span>
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇧🇷 Portuguese</span>
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇷🇺 Russian</span>
-          <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇨🇳 Chinese</span>
           <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇯🇵 Japanese</span>
-          <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">+ 7 more</span>
+          <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇰🇷 Korean</span>
+          <span class="text-xs bg-white/5 border border-white/10 rounded-full px-3 py-1 text-av-muted">🇨🇳 Chinese</span>
+          <span class="text-xs bg-av-lime/10 border border-av-lime/25 rounded-full px-3 py-1 text-av-lime font-medium">+ 7 more</span>
         </div>
       </div>
 
-      <!-- Card 2: Cloud sync -->
-      <div class="bento-card glass rounded-3xl p-8 relative overflow-hidden group hover:border-av-cyan/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]" style="border-color:#2C2C2E">
-        <div class="radial-glow w-32 h-32 bg-av-cyan/12 -top-8 -right-8"></div>
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+      <!-- card: cloud sync -->
+      <div class="glass rounded-3xl p-8 hcard reveal" style="border:1px solid #2C2C2E">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
         </div>
-        <h3 class="text-2xl font-black mb-3 text-white">Cloud Sync</h3>
-        <p class="text-av-muted leading-relaxed mb-5">Secure sign-in with Apple or Google. Your data lives on Supabase and syncs across devices — with full offline-ready architecture so you're never stranded without connectivity.</p>
-        <div class="flex gap-3">
-          <div class="flex items-center gap-2 bg-white/5 rounded-xl px-3 py-2 text-xs text-av-muted border border-white/10">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <h3 class="text-2xl font-black mb-3">Cloud Sync</h3>
+        <p class="text-av-muted leading-relaxed mb-5">Supabase-powered backend syncs your data across all devices. Sign in with Apple or Google. Works fully offline when you're off-grid.</p>
+        <div class="flex gap-2">
+          <div class="flex items-center gap-1.5 text-xs text-av-muted bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             Apple
           </div>
-          <div class="flex items-center gap-2 bg-white/5 rounded-xl px-3 py-2 text-xs text-av-muted border border-white/10">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z"/></svg>
+          <div class="flex items-center gap-1.5 text-xs text-av-muted bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972a6.033 6.033 0 110-12.064c1.498 0 2.866.549 3.921 1.453l2.814-2.814A9.969 9.969 0 0012.545 2C7.021 2 2.543 6.477 2.543 12s4.478 10 10.002 10c8.396 0 10.249-7.85 9.426-11.748l-9.426-.013z"/></svg>
             Google
           </div>
         </div>
       </div>
 
-      <!-- Card 3: Smart Dashboard -->
-      <div class="bento-card glass rounded-3xl p-8 relative overflow-hidden group hover:border-av-lime/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]" style="border-color:#2C2C2E">
-        <div class="icon-ring mb-5 w-14 h-14 rounded-2xl">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <!-- card: dashboard chart -->
+      <div class="glass rounded-3xl p-8 hcard reveal" style="border:1px solid #2C2C2E">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         </div>
         <h3 class="text-2xl font-black mb-3">Smart Dashboard</h3>
-        <p class="text-av-muted leading-relaxed mb-5">Visualize your entire operation at a glance. Charts, trends, and key metrics surface automatically — no manual reporting needed.</p>
-        <!-- Mini chart visualization -->
-        <div class="h-20 flex items-end gap-1.5">
-          <div class="flex-1 bg-av-lime/20 rounded-t-sm" style="height:30%"></div>
-          <div class="flex-1 bg-av-lime/30 rounded-t-sm" style="height:50%"></div>
-          <div class="flex-1 bg-av-lime/40 rounded-t-sm" style="height:40%"></div>
-          <div class="flex-1 bg-av-lime/60 rounded-t-sm" style="height:70%"></div>
-          <div class="flex-1 bg-av-lime/80 rounded-t-sm" style="height:85%"></div>
-          <div class="flex-1 bg-av-lime rounded-t-sm" style="height:100%"></div>
-          <div class="flex-1 bg-av-lime/70 rounded-t-sm" style="height:75%"></div>
-          <div class="flex-1 bg-av-lime/90 rounded-t-sm" style="height:90%"></div>
+        <p class="text-av-muted leading-relaxed mb-5">Your entire operation at a glance. Charts, trends, and key metrics surface automatically.</p>
+        <div class="flex items-end gap-1.5 h-16">
+          <div class="flex-1 rounded-t" style="height:30%;background:rgba(183,242,10,0.2)"></div>
+          <div class="flex-1 rounded-t" style="height:50%;background:rgba(183,242,10,0.35)"></div>
+          <div class="flex-1 rounded-t" style="height:42%;background:rgba(183,242,10,0.3)"></div>
+          <div class="flex-1 rounded-t" style="height:70%;background:rgba(183,242,10,0.55)"></div>
+          <div class="flex-1 rounded-t" style="height:85%;background:rgba(183,242,10,0.7)"></div>
+          <div class="flex-1 rounded-t" style="height:100%;background:#B7F20A"></div>
+          <div class="flex-1 rounded-t" style="height:75%;background:rgba(183,242,10,0.65)"></div>
+          <div class="flex-1 rounded-t" style="height:90%;background:rgba(183,242,10,0.8)"></div>
         </div>
       </div>
 
-      <!-- Card 4: Breeding -->
-      <div class="bento-card glass rounded-3xl p-8 relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]" style="border-color:#2C2C2E">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.25)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFA500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      <!-- card: breeding -->
+      <div class="glass rounded-3xl p-8 hcard reveal" style="border:1px solid #2C2C2E">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFA500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </div>
         <h3 class="text-2xl font-black mb-3">Breeding <span class="text-av-orange">&amp; Pedigree</span></h3>
-        <p class="text-av-muted leading-relaxed">Track pregnancies, scan pedigrees, manage dosage records, and build complete genealogy trees for your herd. Know your lineage, maximize your genetics.</p>
+        <p class="text-av-muted leading-relaxed">Track pregnancies, scan pedigrees, manage dosage records, and build complete genealogy trees. Know your lineage, maximize your genetics.</p>
       </div>
 
-      <!-- Card 5: Offline mode -->
-      <div class="bento-card glass rounded-3xl p-8 relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]" style="border-color:#2C2C2E">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6s3-6 11-6 11 6 11 6"/><path d="M1 6s3 6 11 6 11-6 11-6"/><circle cx="12" cy="6" r="2"/></svg>
-        </div>
-        <h3 class="text-2xl font-black mb-3">Works <span class="text-av-green">Offline</span></h3>
-        <p class="text-av-muted leading-relaxed">Deep in the paddock with no signal? No problem. Animal Vault works completely offline and syncs seamlessly the moment you're back in range.</p>
-      </div>
-
-      <!-- Card 6: Security / biometrics -->
-      <div class="bento-card md:col-span-2 glass rounded-3xl p-8 relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]" style="border-color:#2C2C2E">
-        <div class="flex flex-col sm:flex-row gap-8 items-start">
-          <div class="flex-1">
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <!-- card: offline + security (2-col) -->
+      <div class="lg:col-span-2 glass rounded-3xl p-8 hcard reveal" style="border:1px solid #2C2C2E">
+        <div class="grid sm:grid-cols-2 gap-8">
+          <div>
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6s3-6 11-6 11 6 11 6"/><path d="M1 6s3 6 11 6 11-6 11-6"/><circle cx="12" cy="6" r="2"/></svg>
             </div>
-            <h3 class="text-2xl font-black mb-3">Biometric Security</h3>
-            <p class="text-av-muted leading-relaxed">Protect your farm data with Face ID, Touch ID, or a custom password. Your records stay private — always.</p>
+            <h3 class="text-xl font-black mb-3">Works <span class="text-av-green">Offline</span></h3>
+            <p class="text-av-muted leading-relaxed text-sm">Deep in the paddock with no signal? No problem. Animal Vault is fully offline-ready and syncs instantly when you're back in range.</p>
           </div>
-          <div class="flex-1">
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <div>
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
             </div>
-            <h3 class="text-2xl font-black mb-3">Smart Notifications</h3>
-            <p class="text-av-muted leading-relaxed">Never miss a critical farm event. Get push alerts for overdue vaccinations, low food stock, financial milestones, and AI-detected health risks.</p>
+            <h3 class="text-xl font-black mb-3">Biometric Security</h3>
+            <p class="text-av-muted leading-relaxed text-sm">Protect your farm data with Face ID, Touch ID, or a custom password. Your records are private — always. No exceptions.</p>
           </div>
         </div>
       </div>
@@ -851,220 +785,114 @@
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     PRICING SECTION
-═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════ PRICING ═══════════════════════════ -->
 <section id="pricing" class="py-24 px-6 relative overflow-hidden">
-
-  <div class="radial-glow w-[600px] h-[600px] bg-av-lime/8 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"></div>
+  <div class="glow w-[600px] h-[600px] bg-av-lime/7 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"></div>
 
   <div class="max-w-5xl mx-auto">
-
-    <!-- Header -->
-    <div class="text-center mb-16">
-      <div class="inline-flex items-center gap-2 glass-lime rounded-full px-4 py-2 text-xs font-semibold text-av-lime tracking-widest uppercase mb-6 gsap-hidden" data-gsap="fade-up">
-        <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
-        Simple Pricing
-      </div>
-      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight gsap-hidden" data-gsap="fade-up">
-        Start free.<br /><span class="grad-lime">Scale when ready.</span>
-      </h2>
-      <p class="text-av-muted text-lg mt-5 max-w-xl mx-auto gsap-hidden" data-gsap="fade-up">
-        No hidden fees. No surprise upsells. Choose the plan that fits your farm's size and ambition.
-      </p>
+    <div class="text-center mb-16 reveal">
+      <div class="pill glass-lime text-av-lime mb-6 inline-flex"><span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>Simple Pricing</div>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight">Start free.<br/><span class="grad-lime">Scale when ready.</span></h2>
+      <p class="text-av-muted text-lg mt-4 max-w-lg mx-auto">No hidden fees. No surprise upsells. Pick the plan that fits your farm.</p>
     </div>
 
-    <!-- Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <!-- Free tier -->
-      <div class="glass rounded-3xl p-8 flex flex-col gsap-hidden bento-card hover:-translate-y-1 transition-all duration-300" data-gsap="fade-up" style="border-color:#2C2C2E">
+      <!-- free -->
+      <div class="glass rounded-3xl p-8 flex flex-col hcard reveal" style="border:1px solid #2C2C2E">
+        <div class="pill text-xs text-av-muted mb-5 inline-flex" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)">Free Forever</div>
+        <h3 class="text-2xl font-black mb-1">Breathe hard.</h3>
+        <p class="text-av-muted text-sm mb-5">Get your farm started</p>
         <div class="mb-6">
-          <div class="inline-flex items-center gap-2 bg-white/5 rounded-full px-3 py-1 text-xs font-medium text-av-muted mb-4">Free Forever</div>
-          <h3 class="text-2xl font-black mb-1 text-white">Breathe hard.</h3>
-          <p class="text-av-dim text-sm mb-5">Get your farm started</p>
-          <div class="flex items-end gap-2 mb-1">
-            <span class="text-5xl font-black text-white">$0</span>
-          </div>
-          <p class="text-av-dim text-sm">Always free, no credit card</p>
+          <span class="text-5xl font-black">$0</span>
+          <p class="text-av-dim text-sm mt-1">No credit card needed</p>
         </div>
-
-        <ul class="space-y-3.5 mb-8 flex-1">
-          <li class="flex items-start gap-3 text-sm text-av-muted">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            1 Farm, up to 100 animals
-          </li>
-          <li class="flex items-start gap-3 text-sm text-av-muted">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Stock, health &amp; basic finance tracking
-          </li>
-          <li class="flex items-start gap-3 text-sm text-av-muted">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Local storage (offline)
-          </li>
-          <li class="flex items-start gap-3 text-sm text-av-dim">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            No photo uploads
-          </li>
-          <li class="flex items-start gap-3 text-sm text-av-dim">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            No cloud sync
-          </li>
-          <li class="flex items-start gap-3 text-sm text-av-dim">
-            <svg class="w-5 h-5 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            No AI insights
-          </li>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-3 text-av-muted text-sm"><svg class="w-4 h-4 text-av-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 farm, up to 100 animals</li>
+          <li class="flex items-start gap-3 text-av-muted text-sm"><svg class="w-4 h-4 text-av-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Stock, health &amp; basic finance</li>
+          <li class="flex items-start gap-3 text-av-muted text-sm"><svg class="w-4 h-4 text-av-green flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Offline local storage</li>
+          <li class="flex items-start gap-3 text-av-dim text-sm"><svg class="w-4 h-4 text-av-dim flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No photo uploads</li>
+          <li class="flex items-start gap-3 text-av-dim text-sm"><svg class="w-4 h-4 text-av-dim flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No cloud sync</li>
+          <li class="flex items-start gap-3 text-av-dim text-sm"><svg class="w-4 h-4 text-av-dim flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No AI insights</li>
         </ul>
-
-        <a href="#" class="btn-secondary w-full justify-center">Get Started Free</a>
+        <a href="#" class="btn-ghost w-full justify-center">Start Free</a>
       </div>
 
-      <!-- Pro tier (featured) -->
-      <div class="border-anim tilt-card gsap-hidden relative" data-gsap="fade-up" style="border-radius:24px">
-        <div class="inner p-8 flex flex-col h-full" style="border-radius:22px">
-          <!-- Popular badge -->
-          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
-            <div class="bg-av-lime text-av-black text-xs font-black px-4 py-1.5 rounded-full tracking-wider uppercase shadow-[0_4px_20px_rgba(183,242,10,0.5)]">Most Popular</div>
+      <!-- pro (featured with animated border) -->
+      <div class="anim-border tilt flex flex-col reveal" id="pro-card">
+        <div class="anim-border-inner p-8 flex flex-col h-full" style="border-radius:22px">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+            <div class="bg-av-lime text-av-black text-[11px] font-black px-4 py-1.5 rounded-full tracking-wider uppercase" style="box-shadow:0 4px 20px rgba(183,242,10,0.5)">Most Popular</div>
           </div>
-
-          <div class="mb-6 mt-4">
-            <div class="inline-flex items-center gap-2 bg-av-lime/10 border border-av-lime/20 rounded-full px-3 py-1 text-xs font-medium text-av-lime mb-4">Pro Monthly</div>
-            <h3 class="text-2xl font-black mb-1 text-white">Breathe easy.</h3>
-            <p class="text-av-dim text-sm mb-5">For the serious farmer</p>
-            <div class="flex items-end gap-2 mb-1">
-              <span class="text-5xl font-black grad-lime">$6</span>
-              <span class="text-av-muted text-lg mb-2">/month</span>
-            </div>
-            <p class="text-av-dim text-sm">Cancel anytime</p>
+          <div class="pill text-av-lime mb-5 mt-2 inline-flex" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">Pro Monthly</div>
+          <h3 class="text-2xl font-black mb-1">Breathe easy.</h3>
+          <p class="text-av-muted text-sm mb-5">For the serious farmer</p>
+          <div class="mb-6">
+            <div class="flex items-end gap-1.5"><span class="text-5xl font-black grad-lime">$6</span><span class="text-av-muted text-lg mb-1.5">/month</span></div>
+            <p class="text-av-dim text-sm mt-1">Cancel anytime</p>
           </div>
-
-          <ul class="space-y-3.5 mb-8 flex-1">
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Unlimited farms &amp; animals
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Unlimited photo uploads
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Cloud sync (Supabase)
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Full AI Insights (unlimited)
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              All features, all screens
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Priority support
-            </li>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-lime flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited farms &amp; animals</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-lime flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited photo uploads</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-lime flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Cloud sync across devices</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-lime flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Full AI Insights — unlimited</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-lime flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>All features &amp; all modules</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-lime flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
           </ul>
-
-          <a href="#" class="btn-primary w-full justify-center animate-pulse-glow">
-            Start Pro — $6/mo
-          </a>
+          <a href="#" class="btn-lime w-full justify-center pulse-lime">Start Pro — $6/mo</a>
         </div>
       </div>
 
-      <!-- Lifetime tier -->
-      <div class="border-anim tilt-card gsap-hidden" data-gsap="fade-up" style="border-radius:24px">
-        <div class="inner p-8 flex flex-col h-full" style="border-radius:22px; background: linear-gradient(135deg, #1C1C1E 0%, #111113 100%);">
-
+      <!-- lifetime -->
+      <div class="anim-border tilt flex flex-col reveal" id="lifetime-card">
+        <div class="anim-border-inner p-8 flex flex-col h-full" style="border-radius:22px; background: linear-gradient(135deg,#1C1C1E,#111113)">
+          <div class="pill text-av-cyan mb-5 inline-flex" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">Lifetime Access</div>
+          <h3 class="text-2xl font-black mb-1">Own it forever.</h3>
+          <p class="text-av-muted text-sm mb-5">Pay once, use forever</p>
           <div class="mb-6">
-            <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-av-cyan mb-4" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">Lifetime Access</div>
-            <h3 class="text-2xl font-black mb-1 text-white">Own it forever.</h3>
-            <p class="text-av-dim text-sm mb-5">One price, no subscriptions</p>
-            <div class="flex items-end gap-2 mb-1">
-              <span class="text-5xl font-black text-av-cyan">$99</span>
-              <span class="text-av-muted text-lg mb-2">.99</span>
-            </div>
-            <p class="text-av-dim text-sm">Pay once, use forever</p>
+            <div class="flex items-end gap-0.5"><span class="text-5xl font-black text-av-cyan">$99</span><span class="text-av-cyan text-2xl font-black mb-1">.99</span></div>
+            <p class="text-av-dim text-sm mt-1">≈ 14 months of Pro — best value</p>
           </div>
-
-          <ul class="space-y-3.5 mb-8 flex-1">
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Everything in Pro, forever
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              No recurring payments
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              All future feature updates
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Unlimited farms &amp; animals
-            </li>
-            <li class="flex items-start gap-3 text-sm text-white font-medium">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              VIP early access to new features
-            </li>
-            <li class="flex items-start gap-3 text-sm text-av-muted text-xs">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-av-cyan/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              Equivalent to ~14 months of Pro
-            </li>
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro, forever</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>No recurring payments</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>All future feature updates</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited farms &amp; animals</li>
+            <li class="flex items-start gap-3 text-white font-medium text-sm"><svg class="w-4 h-4 text-av-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>VIP early access to new features</li>
           </ul>
-
-          <a href="#" class="w-full justify-center inline-flex items-center gap-2 py-3.5 px-6 rounded-2xl font-bold text-av-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,199,190,0.4)]" style="background:#00C7BE">
+          <a href="#" class="w-full justify-center inline-flex items-center gap-2 py-3.5 px-6 rounded-2xl font-bold text-av-black transition-all duration-200 hover:-translate-y-1" style="background:#00C7BE;box-shadow:0 4px 20px rgba(0,199,190,0.3)">
             Get Lifetime Access
           </a>
         </div>
       </div>
-
     </div>
 
-    <!-- Reassurance row -->
-    <div class="mt-12 flex flex-wrap justify-center gap-6 gsap-hidden" data-gsap="fade-up">
-      <div class="flex items-center gap-2 text-av-dim text-sm">
-        <svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        No credit card to start
-      </div>
-      <div class="flex items-center gap-2 text-av-dim text-sm">
-        <svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        Cancel anytime
-      </div>
-      <div class="flex items-center gap-2 text-av-dim text-sm">
-        <svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        Secure payments via App Store / Play Store
-      </div>
-      <div class="flex items-center gap-2 text-av-dim text-sm">
-        <svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        Data stays yours, always
-      </div>
+    <!-- trust row -->
+    <div class="mt-10 flex flex-wrap justify-center gap-6 reveal">
+      <span class="flex items-center gap-2 text-av-dim text-sm"><svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>No credit card to start</span>
+      <span class="flex items-center gap-2 text-av-dim text-sm"><svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Cancel anytime</span>
+      <span class="flex items-center gap-2 text-av-dim text-sm"><svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Secure via App Store &amp; Play Store</span>
+      <span class="flex items-center gap-2 text-av-dim text-sm"><svg class="w-4 h-4 text-av-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Your data stays yours</span>
     </div>
   </div>
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     FINAL CTA BANNER
-═══════════════════════════════════════════════════════════════ -->
-<section class="py-24 px-6 relative overflow-hidden">
+<!-- ═══════════════════════════ FINAL CTA ═══════════════════════════ -->
+<section class="py-24 px-6">
   <div class="max-w-4xl mx-auto">
-    <div class="glass rounded-[40px] p-12 sm:p-16 text-center relative overflow-hidden" style="border:1px solid rgba(183,242,10,0.15)">
-      <div class="radial-glow w-[400px] h-[400px] bg-av-lime/12 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="glass rounded-[40px] p-12 sm:p-16 text-center relative overflow-hidden reveal" style="border:1px solid rgba(183,242,10,0.15)">
+      <div class="glow w-[400px] h-[400px] bg-av-lime/12 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
       <div class="relative">
         <div class="text-6xl mb-6">🌿</div>
-        <h2 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-5 gsap-hidden" data-gsap="fade-up">
-          Health is <span class="grad-lime">Wealth.</span>
-        </h2>
-        <p class="text-av-muted text-lg mb-10 max-w-xl mx-auto gsap-hidden" data-gsap="fade-up">
-          Join farmers worldwide who trust Animal Vault to run their farms with confidence. Start free today — no credit card needed.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center gsap-hidden" data-gsap="fade-up">
-          <a href="#" class="btn-primary text-base py-4 px-8 animate-pulse-glow">
+        <h2 class="text-4xl sm:text-5xl font-black tracking-tight mb-4">Health is <span class="grad-lime">Wealth.</span></h2>
+        <p class="text-av-muted text-lg mb-10 max-w-xl mx-auto">Join farmers worldwide running their operations with confidence. Start free — no credit card needed.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#" class="btn-lime text-base py-4 px-8 pulse-lime">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
             App Store
           </a>
-          <a href="#" class="btn-secondary text-base py-4 px-8">
+          <a href="#" class="btn-ghost text-base py-4 px-8">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.19l13.12-7.62-2.76-2.76-11.35 10.19zM20.7 10.56L17.94 9 14.65 12l3.29 3.29 2.78-1.61c.79-.46.79-1.66-.02-2.12zM2.2.83C2.08 1.03 2 1.27 2 1.56v20.88c0 .29.08.53.2.73L14.11 12 2.2.83zM4.17.05L17.3 7.67 14.65 10.32 3.29.13C3.63-.04 3.89-.04 4.17.05z"/></svg>
             Google Play
           </a>
@@ -1075,289 +903,127 @@
 </section>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════════════════════════ -->
-<footer class="border-t py-12 px-6" style="border-color:#2C2C2E">
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<footer class="border-t border-av-border py-12 px-6">
   <div class="max-w-6xl mx-auto">
     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="w-8 h-8 rounded-xl bg-av-lime flex items-center justify-center shadow-[0_0_16px_rgba(183,242,10,0.3)] group-hover:shadow-[0_0_24px_rgba(183,242,10,0.6)] transition-all">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-xl bg-av-lime flex items-center justify-center" style="box-shadow:0 0 16px rgba(183,242,10,0.3)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
-        <span class="font-bold text-base tracking-tight">Animal <span class="text-av-lime">Vault</span></span>
+        <span class="font-bold text-base">Animal <span class="text-av-lime">Vault</span></span>
       </a>
-
-      <!-- Links -->
-      <div class="flex items-center gap-6 text-sm text-av-dim">
+      <div class="flex items-center gap-6 text-sm text-av-muted">
         <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
         <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
         <a href="#" class="hover:text-white transition-colors">Support</a>
       </div>
-
-      <!-- Copyright -->
-      <p class="text-av-dim text-sm">
-        &copy; 2026 Animal Vault. All rights reserved.
-      </p>
+      <p class="text-av-dim text-sm">&copy; 2026 Animal Vault. All rights reserved.</p>
     </div>
-
-    <!-- Bottom bar -->
-    <div class="mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style="border-top:1px solid #2C2C2E">
-      <p class="text-av-dim text-xs">
-        Built with ❤️ for farmers around the world. Powered by Gemini AI &amp; Supabase.
-      </p>
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-av-green animate-pulse"></span>
-        <span class="text-av-dim text-xs">All systems operational</span>
-      </div>
+    <div class="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-av-border">
+      <p class="text-av-dim text-xs">Built for farmers worldwide · Powered by Gemini AI &amp; Supabase</p>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-av-green animate-pulse"></span><span class="text-av-dim text-xs">All systems operational</span></div>
     </div>
   </div>
 </footer>
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     JAVASCRIPT — LENIS + GSAP + INTERACTIONS
-═══════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════ SCRIPTS ═══════════════════════════ -->
 <script>
-/* ──────────────────────────────────────────────────────────────
-   1. LENIS SMOOTH SCROLL
-────────────────────────────────────────────────────────────── */
-const lenis = new Lenis({
-  duration: 1.3,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smooth: true,
-});
-
-// Feed Lenis tick into GSAP
+/* ─── 1. Lenis smooth scroll ─── */
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
 gsap.registerPlugin(ScrollTrigger);
-
 lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add((time) => lenis.raf(time * 1000));
+gsap.ticker.add(time => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
-
-/* ──────────────────────────────────────────────────────────────
-   2. NAVBAR SCROLL STATE
-────────────────────────────────────────────────────────────── */
-const navbar = document.getElementById('navbar');
+/* ─── 2. Navbar scroll state ─── */
 ScrollTrigger.create({
-  start: 'top -80',
-  onUpdate: (self) => {
-    if (self.progress > 0) navbar.classList.add('scrolled');
-    else navbar.classList.remove('scrolled');
-  }
+  start: 'top -60',
+  onUpdate: self => document.getElementById('nav').classList.toggle('scrolled', self.progress > 0)
 });
 
-
-/* ──────────────────────────────────────────────────────────────
-   3. HERO ENTRANCE ANIMATIONS
-────────────────────────────────────────────────────────────── */
+/* ─── 3. Hero entrance — GSAP sets initial state then animates ─── */
 const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+gsap.set('#hero-copy > *', { opacity: 0, y: 30 });
+gsap.set('#hero-phone', { opacity: 0, y: 50, scale: 0.93 });
 heroTl
-  .from('#hero-badge',   { y: 30, opacity: 0, duration: 0.7 })
-  .from('#hero-h1',      { y: 50, opacity: 0, duration: 0.9, clearProps: 'all' }, '-=0.3')
-  .from('#hero-sub',     { y: 30, opacity: 0, duration: 0.7 }, '-=0.5')
-  .from('#hero-ctas',    { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
-  .from('#hero-phone',   { y: 60, opacity: 0, scale: 0.9, duration: 1, ease: 'back.out(1.5)' }, '-=0.4');
+  .to('#hero-copy > *', { opacity: 1, y: 0, duration: 0.75, stagger: 0.12 })
+  .to('#hero-phone',    { opacity: 1, y: 0, scale: 1, duration: 1, ease: 'back.out(1.4)' }, '-=0.5');
 
-
-/* ──────────────────────────────────────────────────────────────
-   4. HERO PHONE SCROLL PARALLAX — locks into place
-────────────────────────────────────────────────────────────── */
+/* ─── 4. Hero phone parallax ─── */
 gsap.to('#hero-phone', {
-  scrollTrigger: {
-    trigger: '#hero',
-    start: 'top top',
-    end: 'bottom top',
-    scrub: 1.5,
-  },
-  y: -80,
-  scale: 0.85,
-  opacity: 0.3,
+  scrollTrigger: { trigger: 'section', start: 'top top', end: 'bottom top', scrub: 1.5 },
+  y: -60, scale: 0.95, opacity: 0.5
 });
 
-
-/* ──────────────────────────────────────────────────────────────
-   5. GENERIC SCROLL-TRIGGERED FADE-UPS
-────────────────────────────────────────────────────────────── */
-gsap.utils.toArray('[data-gsap="fade-up"]').forEach((el) => {
+/* ─── 5. Generic reveal on scroll ─── */
+gsap.utils.toArray('.reveal').forEach(el => {
   gsap.from(el, {
     scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
-    y: 40,
-    opacity: 0,
-    duration: 0.8,
-    ease: 'power2.out',
+    y: 36, opacity: 0, duration: 0.75, ease: 'power2.out'
   });
 });
 
+/* ─── 6. Bento stagger ─── */
+gsap.from('#bento-grid > *', {
+  scrollTrigger: { trigger: '#bento-grid', start: 'top 85%', toggleActions: 'play none none none' },
+  y: 40, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', stagger: 0.1
+});
 
-/* ──────────────────────────────────────────────────────────────
-   6. STICKY SCROLL FEATURE SECTIONS (Desktop ≥ 1024px)
-────────────────────────────────────────────────────────────── */
-function initStickyFeatures() {
-  if (window.innerWidth < 1024) {
-    // On mobile: just fade each panel in sequentially with no sticky
-    document.querySelectorAll('.feature-panel').forEach((panel, i) => {
-      panel.style.opacity = '1';
-      panel.style.transform = 'none';
-    });
-    document.getElementById('features-scroll-spacer').style.display = 'none';
-    return;
-  }
+/* ─── 7. Feature scroll — phone slide switching ─── */
+let currentSlide = 0;
 
-  const panels     = document.querySelectorAll('.feature-panel');
-  const slides     = document.querySelectorAll('.phone-screen-slide');
-  const spacer     = document.getElementById('features-scroll-spacer');
-  const totalPanels = panels.length;
+function goToSlide(idx) {
+  if (idx === currentSlide) return;
+  const prev = document.getElementById('pslide-' + currentSlide);
+  const next = document.getElementById('pslide-' + idx);
+  if (prev) { prev.classList.remove('visible-slide'); prev.classList.add('hidden-slide'); }
+  if (next) { next.classList.remove('hidden-slide'); next.classList.add('visible-slide'); }
 
-  // The scroll spacer controls how much vertical space is consumed
-  spacer.style.height = `${(totalPanels - 1) * 100}vh`;
+  // update panels
+  document.querySelectorAll('.fp').forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+    p.classList.toggle('inactive', i !== idx);
+  });
 
-  function activatePanel(index) {
-    panels.forEach((p, i) => {
-      p.classList.toggle('active', i === index);
-    });
-    slides.forEach((s, i) => {
-      gsap.to(s, {
-        opacity: i === index ? 1 : 0,
-        y: i === index ? 0 : (i < index ? -20 : 20),
-        duration: 0.6,
-        ease: 'power2.inOut',
-      });
-    });
-  }
+  // update dots
+  document.querySelectorAll('.step-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
 
-  // Initialize
-  activatePanel(0);
+  currentSlide = idx;
+}
 
+// Scroll-linked feature switching (desktop)
+const panels = document.querySelectorAll('.fp');
+panels.forEach((panel, i) => {
   ScrollTrigger.create({
-    trigger: '#features-sticky',
-    start: 'top top',
-    end: () => `+=${spacer.offsetHeight}`,
-    scrub: false,
-    onUpdate: (self) => {
-      const idx = Math.min(
-        Math.floor(self.progress * totalPanels),
-        totalPanels - 1
-      );
-      activatePanel(idx);
-    }
+    trigger: panel,
+    start: 'top 55%',
+    end: 'bottom 45%',
+    onEnter:      () => goToSlide(i),
+    onEnterBack:  () => goToSlide(i),
   });
-}
-
-initStickyFeatures();
-window.addEventListener('resize', () => {
-  ScrollTrigger.getAll().forEach(t => t.kill());
-  initStickyFeatures();
 });
 
-
-/* ──────────────────────────────────────────────────────────────
-   7. BENTO GRID — STAGGERED ENTRANCE
-────────────────────────────────────────────────────────────── */
-gsap.from('.bento-card', {
-  scrollTrigger: {
-    trigger: '#bento-grid',
-    start: 'top 85%',
-    toggleActions: 'play none none none',
-  },
-  y: 50,
-  opacity: 0,
-  scale: 0.96,
-  duration: 0.7,
-  ease: 'power2.out',
-  stagger: 0.12,
-});
-
-
-/* ──────────────────────────────────────────────────────────────
-   8. PRICING CARD STAGGER
-────────────────────────────────────────────────────────────── */
-gsap.from('#pricing .gsap-hidden', {
-  scrollTrigger: {
-    trigger: '#pricing',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-  y: 40,
-  opacity: 0,
-  duration: 0.7,
-  ease: 'power2.out',
-  stagger: 0.15,
-});
-
-
-/* ──────────────────────────────────────────────────────────────
-   9. PRICING CARD 3D TILT ON MOUSEMOVE
-────────────────────────────────────────────────────────────── */
-document.querySelectorAll('.tilt-card').forEach((card) => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const dx = (e.clientX - cx) / (rect.width / 2);
-    const dy = (e.clientY - cy) / (rect.height / 2);
-    const rotX = -dy * 8;
-    const rotY = dx * 8;
-    gsap.to(card, {
-      rotateX: rotX,
-      rotateY: rotY,
-      scale: 1.03,
-      duration: 0.3,
-      ease: 'power2.out',
-      transformPerspective: 800,
-    });
+/* ─── 8. Pricing card 3D tilt ─── */
+['pro-card', 'lifetime-card'].forEach(id => {
+  const card = document.getElementById(id);
+  if (!card) return;
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2);
+    const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
+    gsap.to(card, { rotateX: -dy * 7, rotateY: dx * 7, scale: 1.025, duration: 0.3, ease: 'power2.out', transformPerspective: 900 });
   });
-
   card.addEventListener('mouseleave', () => {
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      scale: 1,
-      duration: 0.5,
-      ease: 'elastic.out(1, 0.4)',
-    });
+    gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
   });
 });
 
-
-/* ──────────────────────────────────────────────────────────────
-   10. LUCIDE ICONS (initialize any <i data-lucide="..."> tags)
-────────────────────────────────────────────────────────────── */
-if (typeof lucide !== 'undefined') lucide.createIcons();
-
-
-/* ──────────────────────────────────────────────────────────────
-   11. MOBILE MENU (simple toggle)
-────────────────────────────────────────────────────────────── */
-// Not needed — nav is already minimal on mobile, hidden links collapse fine
-
-
-/* ──────────────────────────────────────────────────────────────
-   12. COUNTER ANIMATION for stats (if any appear in viewport)
-────────────────────────────────────────────────────────────── */
-function animateCounter(el, target, suffix = '') {
-  gsap.to({ val: 0 }, {
-    val: target,
-    duration: 1.5,
-    ease: 'power2.out',
-    onUpdate: function () {
-      el.textContent = Math.round(this.targets()[0].val) + suffix;
-    }
-  });
-}
-
-// Trigger counters when the phone UI is visible
-ScrollTrigger.create({
-  trigger: '#hero-phone',
-  start: 'top 80%',
-  once: true,
-  onEnter: () => {
-    const els = document.querySelectorAll('.phone-frame');
-    // lightweight — just visual, counters inside phone are static
-  }
+/* ─── 9. Pricing cards stagger ─── */
+gsap.from('#pricing .reveal', {
+  scrollTrigger: { trigger: '#pricing', start: 'top 80%', toggleActions: 'play none none none' },
+  y: 40, opacity: 0, duration: 0.7, ease: 'power2.out', stagger: 0.13
 });
 </script>
 
