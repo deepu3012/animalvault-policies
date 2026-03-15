@@ -301,64 +301,65 @@
         <!-- phone -->
         <div class="phone float mx-auto">
           <div class="phone-notch"></div>
-          <!-- screen content -->
-          <div class="absolute inset-0 flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4">
-
-            <!-- header -->
-            <div class="mb-4">
-              <p class="text-av-muted text-[10px] uppercase tracking-widest">My Farm</p>
-              <h3 class="text-white text-xl font-black mt-0.5">Good morning 🌿</h3>
+          <!-- Real Farms screen recreation -->
+          <div class="absolute inset-0 flex flex-col bg-[#050505] px-3 pt-12 pb-0 overflow-hidden">
+            <!-- top icons -->
+            <div class="flex justify-end gap-2.5 mb-3">
+              <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+              <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+              <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
             </div>
-
-            <!-- stat cards -->
-            <div class="grid grid-cols-2 gap-2 mb-3">
-              <div class="glass rounded-2xl p-3">
-                <p class="text-av-muted text-[9px] uppercase tracking-wide">Animals</p>
-                <p class="text-av-lime text-2xl font-black mt-1">247</p>
-              </div>
-              <div class="glass rounded-2xl p-3">
-                <p class="text-av-muted text-[9px] uppercase tracking-wide">Revenue</p>
-                <p class="text-av-cyan text-2xl font-black mt-1">$8.4k</p>
-              </div>
+            <!-- title -->
+            <p class="text-white text-[22px] font-black mb-2">Farms<span class="text-av-lime">.</span></p>
+            <!-- AI insights row -->
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Farm Insights</span>
+              <span class="text-av-muted text-[10px]">Show ›</span>
             </div>
-
-            <!-- alert -->
-            <div class="rounded-2xl p-3 mb-3" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)">
-              <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-av-red animate-pulse flex-shrink-0"></div>
-                <p class="text-[11px] text-av-red font-semibold">3 animals need attention</p>
-              </div>
+            <!-- quick actions row -->
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>⊞</span> Quick actions</span>
+              <span class="text-av-muted text-[10px]">Show ›</span>
             </div>
-
-            <!-- animal list -->
-            <div class="space-y-2 mb-3">
-              <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-base">🐄</div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-white text-[11px] font-semibold truncate">Bessie #A-104</p>
-                  <p class="text-av-muted text-[10px]">Hereford · 3 yrs</p>
+            <!-- today tasks card -->
+            <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+              <p class="text-av-lime text-[10px] font-bold mb-0.5">Today tasks</p>
+              <p class="text-av-muted text-[9px] mb-2">Farm 1: 2 tasks today</p>
+              <div class="flex items-start justify-between gap-2 mb-1.5">
+                <div>
+                  <p class="text-av-lime text-[9px] font-semibold">Pending payment from John Doe 2</p>
+                  <p class="text-av-muted text-[8px]">Owes C$ 232257.00</p>
                 </div>
-                <div class="w-2 h-2 rounded-full bg-av-green flex-shrink-0"></div>
-              </div>
-              <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-slate-500/20 flex items-center justify-center text-base">🐑</div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-white text-[11px] font-semibold truncate">Lamb #S-021</p>
-                  <p class="text-av-muted text-[10px]">Merino · 8 mo</p>
+                <div class="w-6 h-6 rounded-full bg-[#2C2C2E] flex items-center justify-center flex-shrink-0">
+                  <span class="text-av-lime text-[10px]">📞</span>
                 </div>
-                <div class="w-2 h-2 rounded-full bg-av-green flex-shrink-0"></div>
+              </div>
+              <p class="text-av-lime text-[9px] font-semibold">Vaccination due today</p>
+            </div>
+            <!-- farm 1 card -->
+            <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+              <div class="flex items-center justify-between mb-2">
+                <p class="text-white text-[11px] font-bold">Farm 1</p>
+                <span class="text-av-lime text-[9px] font-bold px-2 py-0.5 rounded-md" style="border:1px solid #B7F20A">Current</span>
+              </div>
+              <div class="grid grid-cols-3 gap-1 text-center">
+                <div><div class="text-av-lime text-[13px] mb-0.5">🐾</div><p class="text-av-lime text-[14px] font-black">202</p></div>
+                <div><div class="text-av-lime text-[13px] mb-0.5">🛒</div><p class="text-av-lime text-[14px] font-black">10</p></div>
+                <div><div class="text-av-lime text-[13px] mb-0.5">✕</div><p class="text-av-lime text-[14px] font-black">0</p></div>
               </div>
             </div>
-
-            <!-- AI card -->
-            <div class="glass-lime rounded-2xl p-3 mt-auto">
-              <div class="flex items-center gap-2 mb-1.5">
-                <div class="w-4 h-4 rounded-full bg-av-lime/20 flex items-center justify-center">
-                  <span class="text-[8px] text-av-lime font-bold">✦</span>
-                </div>
-                <p class="text-[9px] text-av-lime font-bold uppercase tracking-wider">AI Insight</p>
-              </div>
-              <p class="text-[10px] text-av-muted leading-relaxed">Schedule vaccination for your sheep herd this week based on seasonal patterns.</p>
+            <!-- second farm row -->
+            <div class="rounded-2xl px-3 py-2.5 mb-auto flex items-center justify-between" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+              <p class="text-white text-[11px] font-semibold">Farm 1</p>
+              <span class="text-av-lime text-[13px]">✓</span>
+            </div>
+            <!-- bottom nav -->
+            <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+              <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">⌂</span><span class="text-av-lime text-[8px] font-bold">Farms</span></div>
+              <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+              <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+              <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+              <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
             </div>
           </div>
         </div>
@@ -429,136 +430,218 @@
           <div class="phone" id="feat-phone" style="height: 500px; width: 250px;">
             <div class="phone-notch"></div>
 
-            <!-- Slide 0: Inventory -->
-            <div class="pslide visible-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-0">
-              <p class="text-av-muted text-[9px] uppercase tracking-widest mb-3">Inventory &amp; Photos</p>
-              <div class="space-y-2 mb-3">
-                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
-                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 flex items-center justify-center text-lg flex-shrink-0">🐄</div>
-                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Bessie #A-104</p><p class="text-av-muted text-[10px]">Hereford · 3 yrs</p></div>
-                  <div class="w-2 h-2 rounded-full bg-av-green"></div>
+            <!-- Slide 0: Stock & Procurement — matches real app screenshot -->
+            <div class="pslide visible-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-0">
+              <!-- top bar -->
+              <div class="flex justify-end gap-3 mb-3">
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+              </div>
+              <p class="text-white text-[18px] font-black mb-1">Stock <span class="text-av-lime">&amp;</span> Procurement<span class="text-av-lime">.</span></p>
+              <!-- AI row -->
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Sell Timing Advisor</span>
+                <span class="text-av-muted text-[10px]">Show ›</span>
+              </div>
+              <!-- summary card -->
+              <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <p class="text-av-lime text-[10px] font-semibold mb-1">Farm: Farm 1</p>
+                <div class="flex items-baseline gap-2 mb-0.5">
+                  <span class="text-av-lime text-2xl font-black">202</span>
+                  <span class="text-white text-[11px] font-medium">In stock</span>
+                  <span class="text-av-lime text-[13px] font-black ml-auto">C$ 4,927.56</span>
                 </div>
-                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
-                  <div class="w-9 h-9 rounded-xl bg-slate-500/20 flex items-center justify-center text-lg flex-shrink-0">🐑</div>
-                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Lamb #S-021</p><p class="text-av-muted text-[10px]">Merino · 8 mo</p></div>
-                  <div class="w-2 h-2 rounded-full bg-av-green"></div>
+                <p class="text-av-muted text-[9px]">10 sold · 0 dead · Pending receivables 232257.00</p>
+              </div>
+              <!-- filter card -->
+              <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E">
+                <p class="text-av-muted text-[9px] mb-1">View</p>
+                <div class="rounded-xl px-3 py-1.5 flex justify-between items-center mb-2" style="background:#111113">
+                  <span class="text-white text-[10px] font-medium">In Stock</span>
+                  <span class="text-av-muted text-[10px]">▾</span>
                 </div>
-                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
-                  <div class="w-9 h-9 rounded-xl bg-pink-500/20 flex items-center justify-center text-lg flex-shrink-0">🐖</div>
-                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Piglet #P-008</p><p class="text-av-muted text-[10px]">Duroc · 4 mo</p></div>
-                  <div class="w-2 h-2 rounded-full bg-av-orange animate-pulse"></div>
+                <div class="rounded-xl px-3 py-1.5 flex items-center gap-2 mb-2" style="background:#111113">
+                  <span class="text-av-muted text-[10px]">⌕</span>
+                  <span class="text-av-muted text-[10px]">Search stock</span>
                 </div>
-                <div class="glass rounded-xl p-2.5 flex items-center gap-2.5">
-                  <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-lg flex-shrink-0">🐐</div>
-                  <div class="flex-1"><p class="text-white text-[11px] font-semibold">Nanny #G-033</p><p class="text-av-muted text-[10px]">Boer · 2 yrs</p></div>
-                  <div class="w-2 h-2 rounded-full bg-av-green"></div>
+                <div class="flex items-center justify-between">
+                  <span class="text-av-lime text-[10px] font-medium">Group by category</span>
+                  <div class="w-8 h-4 rounded-full bg-av-lime flex items-center justify-end px-0.5"><div class="w-3 h-3 rounded-full bg-[#050505]"></div></div>
                 </div>
               </div>
-              <div class="glass-lime rounded-2xl p-3 mt-auto text-center">
-                <p class="text-av-lime text-2xl font-black">247</p>
-                <p class="text-av-muted text-[10px]">Total animals tracked</p>
+              <!-- category -->
+              <p class="text-av-lime text-[10px] font-semibold mb-1">By category</p>
+              <div class="rounded-2xl px-3 py-2.5 flex items-center justify-between mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <span class="text-av-lime text-[11px] font-semibold">Chicken (101)</span>
+                <span class="text-av-muted text-[10px]">▾</span>
               </div>
-            </div>
-
-            <!-- Slide 1: Health -->
-            <div class="pslide hidden-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-1">
-              <p class="text-av-muted text-[9px] uppercase tracking-widest mb-3">Health Records</p>
-              <div class="space-y-2 mb-3">
-                <div class="rounded-xl p-3" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2)">
-                  <div class="flex items-center gap-2 mb-1"><div class="w-1.5 h-1.5 rounded-full bg-av-red animate-pulse"></div><p class="text-av-red text-[10px] font-bold">URGENT</p></div>
-                  <p class="text-white text-[11px] font-semibold">Bessie — FMD booster overdue</p>
-                  <p class="text-av-muted text-[10px] mt-0.5">2 days overdue · Hereford</p>
-                </div>
-                <div class="glass rounded-xl p-2.5">
-                  <p class="text-av-muted text-[9px] uppercase tracking-wide mb-1">Last treatment</p>
-                  <p class="text-white text-[11px] font-semibold">Antibiotic — Lamb #S-021</p>
-                  <p class="text-av-muted text-[10px]">3 days ago · Dr. Ahmed</p>
-                </div>
-                <div class="glass rounded-xl p-2.5">
-                  <p class="text-av-muted text-[9px] uppercase tracking-wide mb-2">Health trend (7d)</p>
-                  <div class="flex items-end gap-1 h-10">
-                    <div class="flex-1 rounded-t" style="height:40%;background:rgba(183,242,10,0.3)"></div>
-                    <div class="flex-1 rounded-t" style="height:55%;background:rgba(183,242,10,0.45)"></div>
-                    <div class="flex-1 rounded-t" style="height:70%;background:rgba(183,242,10,0.6)"></div>
-                    <div class="flex-1 rounded-t" style="height:85%;background:rgba(183,242,10,0.75)"></div>
-                    <div class="flex-1 rounded-t" style="height:65%;background:rgba(239,68,68,0.6)"></div>
-                    <div class="flex-1 rounded-t" style="height:80%;background:rgba(183,242,10,0.8)"></div>
-                    <div class="flex-1 rounded-t" style="height:100%;background:#B7F20A"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="glass rounded-xl p-2.5 mt-auto flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg bg-av-green/20 flex items-center justify-center flex-shrink-0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-                <p class="text-av-muted text-[10px]">94% of herd in good health</p>
+              <!-- bottom nav -->
+              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">▤</span><span class="text-av-lime text-[8px] font-bold">Stock</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
               </div>
             </div>
 
-            <!-- Slide 2: Finance -->
-            <div class="pslide hidden-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-2">
-              <p class="text-av-muted text-[9px] uppercase tracking-widest mb-3">Finance &amp; Procurement</p>
-              <div class="grid grid-cols-2 gap-2 mb-3">
-                <div class="glass rounded-xl p-2.5 text-center">
-                  <p class="text-av-cyan text-xl font-black">$8.4k</p>
-                  <p class="text-av-muted text-[9px]">Revenue</p>
+            <!-- Slide 1: Health — matches real app screenshot -->
+            <div class="pslide hidden-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-1">
+              <div class="flex justify-end gap-3 mb-3">
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+              </div>
+              <p class="text-white text-[18px] font-black mb-1">Health<span class="text-av-lime">.</span></p>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Vet: Proactive Care Guide</span>
+                <span class="text-av-muted text-[10px]">Show ›</span>
+              </div>
+              <!-- stats card -->
+              <div class="rounded-2xl p-3 mb-2 space-y-1.5" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <p class="text-av-lime text-[10px] font-semibold">Farm: Farm 1</p>
+                <div class="flex gap-3">
+                  <span class="text-white text-[10px]">Vaccinations <span class="text-av-lime font-bold">0</span></span>
+                  <span class="text-av-muted text-[10px]">·</span>
+                  <span class="text-white text-[10px]">Treatments <span class="text-av-lime font-bold">0</span></span>
                 </div>
-                <div class="glass rounded-xl p-2.5 text-center">
-                  <p class="text-av-red text-xl font-black">$3.1k</p>
-                  <p class="text-av-muted text-[9px]">Expenses</p>
+                <p class="text-[9px] leading-relaxed" style="color:#B7F20A">Food stock: 1 · <span style="color:#EF4444">Low: 0</span> · <span style="color:#EF4444">Expired: 1</span> · <span style="color:#B7F20A">Due vaccines: 2</span> · Feed logs: 0</p>
+                <div class="rounded-xl px-2 py-1 flex justify-between" style="background:#111113">
+                  <span class="text-white text-[10px]">All</span><span class="text-av-muted text-[10px]">▾</span>
                 </div>
               </div>
-              <div class="glass rounded-xl p-2.5 mb-2">
-                <div class="flex justify-between mb-1.5"><p class="text-[10px] text-av-muted">Profit margin</p><p class="text-[10px] text-av-green font-bold">63%</p></div>
-                <div class="w-full h-1.5 rounded-full" style="background:rgba(255,255,255,0.08)"><div class="h-full rounded-full bg-av-lime" style="width:63%"></div></div>
+              <!-- dosage card -->
+              <div class="rounded-2xl p-2.5 mb-2 flex items-start gap-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <div class="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#2C2C2E"><span class="text-av-lime text-[12px]">⊞</span></div>
+                <div class="flex-1">
+                  <p class="text-av-lime text-[10px] font-semibold">Dosage recommendation</p>
+                  <p class="text-av-muted text-[9px] leading-relaxed">Select any animal for AI dosage &amp; feed advice by weight and age</p>
+                </div>
+                <span class="text-av-muted text-[10px] mt-0.5">›</span>
               </div>
-              <div class="space-y-1.5 mb-3">
-                <div class="flex justify-between items-center glass rounded-xl px-2.5 py-2">
-                  <span class="text-[10px] text-av-muted">Sale — 4 cattle</span>
-                  <span class="text-[10px] text-av-green font-bold">+$2,400</span>
-                </div>
-                <div class="flex justify-between items-center glass rounded-xl px-2.5 py-2">
-                  <span class="text-[10px] text-av-muted">Feed purchase</span>
-                  <span class="text-[10px] text-av-red font-bold">−$380</span>
-                </div>
-                <div class="flex justify-between items-center glass rounded-xl px-2.5 py-2">
-                  <span class="text-[10px] text-av-muted">Vet fees</span>
-                  <span class="text-[10px] text-av-red font-bold">−$120</span>
+              <!-- medicine -->
+              <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E">
+                <p class="text-av-lime text-[10px] font-semibold mb-0.5">Medicine stock</p>
+                <p class="text-av-muted text-[9px]">No medicine records yet.</p>
+              </div>
+              <!-- vaccination -->
+              <div class="rounded-2xl p-2.5 mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <p class="text-av-lime text-[10px] font-semibold mb-1">Vaccination schedules</p>
+                <div class="flex justify-between items-center">
+                  <div><p class="text-av-lime text-[9px] font-medium">Vaccination · 2026-03-13</p><p class="text-av-red text-[9px] font-bold">Overdue</p></div>
+                  <span class="text-av-muted text-[10px]">···</span>
                 </div>
               </div>
-              <div class="glass-lime rounded-xl px-2.5 py-2 mt-auto text-center">
-                <p class="text-av-lime text-[10px] font-semibold">$5.3k net profit this month</p>
+              <!-- bottom nav -->
+              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">🛡</span><span class="text-av-lime text-[8px] font-bold">Health</span></div>
               </div>
             </div>
 
-            <!-- Slide 3: AI -->
-            <div class="pslide hidden-slide flex flex-col bg-gradient-to-b from-[#111113] to-[#050505] px-4 pt-14 pb-4" id="pslide-3">
-              <div class="flex items-center gap-2 mb-4">
-                <div class="w-8 h-8 rounded-xl bg-av-lime/20 border border-av-lime/30 flex items-center justify-center flex-shrink-0">
-                  <span class="text-av-lime text-sm font-bold">✦</span>
+            <!-- Slide 2: Inventory & Finance — matches real app screenshot -->
+            <div class="pslide hidden-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-2">
+              <div class="flex justify-end gap-3 mb-3">
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">📊</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+              </div>
+              <p class="text-white text-[16px] font-black mb-1">Inventory <span class="text-av-lime">&amp;</span> Finance<span class="text-av-lime">.</span></p>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Insight</span>
+                <span class="text-av-muted text-[10px]">Show ›</span>
+              </div>
+              <!-- farm selector -->
+              <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <p class="text-av-lime text-[10px] font-semibold mb-1.5">Farm: Farm 1</p>
+                <div class="grid grid-cols-2 gap-1.5">
+                  <div><p class="text-av-muted text-[8px] mb-0.5">Month</p><div class="rounded-lg px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[9px]">Full year</span><span class="text-av-muted text-[9px]">▾</span></div></div>
+                  <div><p class="text-av-muted text-[8px] mb-0.5">Year</p><div class="rounded-lg px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[9px]">2026</span><span class="text-av-muted text-[9px]">▾</span></div></div>
                 </div>
+              </div>
+              <!-- this year -->
+              <p class="text-av-lime text-[10px] font-semibold mb-1">This year</p>
+              <div class="grid grid-cols-2 gap-1.5 mb-2">
+                <div class="rounded-2xl p-2.5" style="background:#1C1C1E">
+                  <div class="flex items-center gap-1 mb-0.5"><span class="text-av-red text-[8px]">↘</span><span class="text-av-muted text-[8px]">Expenses</span></div>
+                  <p class="text-av-red text-[15px] font-black">C$ 306k</p>
+                </div>
+                <div class="rounded-2xl p-2.5" style="background:#1C1C1E">
+                  <div class="flex items-center gap-1 mb-0.5"><span class="text-av-lime text-[8px]">↗</span><span class="text-av-muted text-[8px]">Revenue</span></div>
+                  <p class="text-av-lime text-[15px] font-black">C$ 0.00</p>
+                </div>
+              </div>
+              <!-- net cash flow -->
+              <div class="rounded-2xl p-2.5 mb-2 flex items-center gap-2" style="background:#1C1C1E;border:1px solid rgba(239,68,68,0.3)">
+                <span class="text-av-red text-[10px]">⚠</span>
                 <div>
-                  <p class="text-white text-[11px] font-bold">AI Farm Assistant</p>
-                  <p class="text-av-muted text-[10px]">Powered by Gemini</p>
+                  <p class="text-av-muted text-[8px]">Net cash flow</p>
+                  <p class="text-av-lime text-[15px] font-black">-C$ 306k</p>
                 </div>
               </div>
-              <div class="space-y-2">
-                <div class="glass-lime rounded-xl p-2.5">
-                  <p class="text-av-lime text-[9px] font-bold uppercase tracking-wide mb-1">💡 Vet Recommendation</p>
-                  <p class="text-av-muted text-[10px] leading-relaxed">Schedule respiratory vaccinations for your cattle herd within 2 weeks — seasonal risk is elevated.</p>
-                </div>
-                <div class="glass rounded-xl p-2.5">
-                  <p class="text-av-dim text-[9px] font-bold uppercase tracking-wide mb-1">📊 Financial Insight</p>
-                  <p class="text-av-muted text-[10px] leading-relaxed">Feed costs are 18% above last quarter. Bulk procurement could save ~$640/month.</p>
-                </div>
-                <div class="glass rounded-xl p-2.5">
-                  <p class="text-av-dim text-[9px] font-bold uppercase tracking-wide mb-1">🔬 Mortality Analysis</p>
-                  <p class="text-av-muted text-[10px] leading-relaxed">2 recent losses show signs of bloat. Review feed schedule and consider preventive treatment.</p>
+              <!-- vs last year -->
+              <p class="text-av-lime text-[10px] font-semibold mb-1">Vs last year</p>
+              <div class="rounded-2xl p-2.5 mb-auto" style="background:#1C1C1E">
+                <div class="flex justify-between text-[9px]">
+                  <div><p class="text-av-muted mb-0.5">Last year</p><p class="text-av-red font-bold">C$ 0.00</p><p class="text-av-muted">C$ 0.00</p></div>
+                  <span class="text-av-muted self-center">⇄</span>
+                  <div class="text-right"><p class="text-av-muted mb-0.5">This year</p><p class="text-av-red font-bold">C$ 306k</p><p class="text-av-lime font-bold">C$ 0.00</p></div>
                 </div>
               </div>
-              <div class="mt-auto glass rounded-xl flex items-center gap-2 px-3 py-2">
-                <span class="text-av-dim text-[10px] flex-1">Ask your AI assistant…</span>
-                <div class="w-6 h-6 rounded-lg bg-av-lime flex items-center justify-center">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#050505" stroke-width="3"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+              <!-- bottom nav -->
+              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">📊</span><span class="text-av-lime text-[8px] font-bold">Inv &amp; Fin</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
+              </div>
+            </div>
+
+            <!-- Slide 3: AI Farm Insights — matches real app screenshot -->
+            <div class="pslide hidden-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-3">
+              <div class="flex justify-end gap-3 mb-3">
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+              </div>
+              <p class="text-white text-[18px] font-black mb-1">Farms<span class="text-av-lime">.</span></p>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Farm Insights</span>
+                <span class="text-av-muted text-[10px]">Hide ∧</span>
+              </div>
+              <!-- AI climate alert -->
+              <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <div class="flex items-center gap-1.5 mb-2">
+                  <span class="text-[12px]">🌡</span>
+                  <p class="text-white text-[10px] font-bold">AI Climate Risk Alert</p>
                 </div>
+                <div class="rounded-xl p-2" style="background:#2A2A3A">
+                  <p class="text-av-muted text-[9px] leading-relaxed">Fluctuating temperatures (-6°C to 11°C) &amp; 20mm rainfall create a severe respiratory distress risk for your 111 broilers. Stabilize barn ventilation immediately to manage humidity and prevent cold drafts.</p>
+                </div>
+              </div>
+              <!-- mortality risk -->
+              <div class="rounded-2xl p-3 mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                <div class="flex items-center gap-1.5 mb-2">
+                  <span class="text-[10px]">🔴</span>
+                  <p class="text-white text-[10px] font-bold">Mortality Risk Alert</p>
+                </div>
+                <div class="rounded-xl p-2" style="background:#2D3B1A">
+                  <p class="text-av-lime text-[8px] font-bold leading-relaxed uppercase">RISK: MODERATE · TARGET: BROILER · CAUSE: RESPIRATORY STRESS DUE TO SEASONAL TEMPERATURE FLUCTUATIONS &amp; VENTILATION CHALLENGES</p>
+                </div>
+              </div>
+              <!-- bottom nav -->
+              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">⌂</span><span class="text-av-lime text-[8px] font-bold">Farms</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
               </div>
             </div>
           </div>
