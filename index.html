@@ -194,10 +194,13 @@
 
     /* ── sticky features (desktop) ── */
     @media (min-width: 1024px) {
-      #feat-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+      /* top:72px keeps pin BELOW the fixed navbar */
+      #feat-sticky { position: sticky; top: 72px; height: calc(100vh - 72px); overflow: hidden; }
       .feat-scroll-room { height: 300vh; }
       .feat-panel { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
-      .feat-panel.fp.inactive { pointer-events: none; }
+      /* inactive panels fully invisible when stacked absolutely */
+      .feat-panel.fp.inactive { opacity: 0 !important; pointer-events: none !important; transform: translateX(-12px) !important; }
+      .feat-panel.fp.active   { opacity: 1 !important; pointer-events: auto !important; transform: translateX(0) !important; }
     }
     @media (max-width: 1023px) {
       #feat-sticky { padding-top: 5rem; padding-bottom: 5rem; }
@@ -430,7 +433,7 @@
     <div class="max-w-7xl mx-auto h-full flex flex-col">
 
       <!-- header -->
-      <div class="text-center pt-20 pb-6 flex-shrink-0">
+      <div class="text-center pt-8 pb-4 flex-shrink-0">
         <div class="pill glass-lime text-av-lime mb-4 inline-flex">
           <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
           Core Features
@@ -1111,18 +1114,23 @@ function manualSlide(idx) {
   applySlide(idx);
 }
 
-// Scroll-driven: uses section scroll progress to map to slide index
-lenis.on('scroll', ({ scroll }) => {
+// Scroll-driven: maps section scroll progress to slide index
+// Uses window.scrollY (reliable with Lenis which updates native scroll)
+lenis.on('scroll', () => {
   if (window.innerWidth < 1024 || scrollLocked) return;
   const section = document.getElementById('features');
   if (!section) return;
-  const sectionTop = section.getBoundingClientRect().top + scroll;
-  const sectionHeight = section.offsetHeight;
-  const viewportHeight = window.innerHeight;
-  const scrollableRange = sectionHeight - viewportHeight;
+  const scroll = window.scrollY;
+  const navH = 72; // fixed navbar height — feat-sticky uses top:72px
+  // Absolute document position of section top
+  const sectionDocTop = section.getBoundingClientRect().top + scroll;
+  // Sticky activates when section top reaches 72px from viewport top
+  const stickyStart = sectionDocTop - navH;
+  // Scrollable range = total section height minus the sticky viewport height
+  const scrollableRange = section.offsetHeight - (window.innerHeight - navH);
   if (scrollableRange <= 0) return;
-  const scrolledWithin = Math.max(0, scroll - sectionTop);
-  const progress = Math.min(1, scrolledWithin / scrollableRange);
+  const scrolledIn = Math.max(0, scroll - stickyStart);
+  const progress = Math.min(1, scrolledIn / scrollableRange);
   const slideIdx = Math.min(3, Math.floor(progress * 4));
   if (slideIdx !== currentSlide) applySlide(slideIdx);
 });
