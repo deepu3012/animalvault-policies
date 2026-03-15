@@ -123,16 +123,6 @@
       font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
     }
 
-    /* ── feature panel transition ── */
-    .fp { transition: opacity 0.45s ease, transform 0.45s ease; }
-    .fp.inactive { opacity: 0.2; transform: translateX(-8px); }
-    .fp.active   { opacity: 1; transform: translateX(0); }
-
-    /* ── phone slide ── */
-    .pslide { position: absolute; inset: 0; transition: opacity 0.5s ease, transform 0.5s ease; }
-    .pslide.hidden-slide { opacity: 0; transform: translateY(16px); pointer-events: none; }
-    .pslide.visible-slide { opacity: 1; transform: translateY(0); }
-
     /* ── animated border ── */
     @keyframes border-spin {
       0%   { background-position: 0% 50%; }
@@ -187,27 +177,6 @@
     /* ── scroll indicator bounce ── */
     @keyframes bounce2 { 0%,100%{transform:translateY(0);opacity:1} 50%{transform:translateY(7px);opacity:0.4} }
     .bounce { animation: bounce2 1.8s ease-in-out infinite; }
-
-    /* ── step dot ── */
-    .step-dot { width: 10px; height: 10px; border-radius: 50%; background: #2C2C2E; transition: background 0.3s, transform 0.3s; cursor: pointer; }
-    .step-dot.active { background: #B7F20A; transform: scale(1.3); }
-
-    /* ── sticky features (desktop) ── */
-    @media (min-width: 1024px) {
-      /* top:72px keeps pin BELOW the fixed navbar */
-      #feat-sticky { position: sticky; top: 72px; height: calc(100vh - 72px); overflow: hidden; }
-      .feat-scroll-room { height: 400vh; }
-      .feat-panel { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; }
-      /* inactive panels fully invisible when stacked absolutely */
-      .feat-panel.fp.inactive { opacity: 0 !important; pointer-events: none !important; transform: translateX(-12px) !important; }
-      .feat-panel.fp.active   { opacity: 1 !important; pointer-events: auto !important; transform: translateX(0) !important; }
-    }
-    @media (max-width: 1023px) {
-      #feat-sticky { padding-top: 5rem; padding-bottom: 5rem; }
-      .feat-scroll-room { display: none; }
-      .feat-panel { padding: 3rem 0; }
-      .feat-panel.fp.inactive { opacity: 1 !important; transform: none !important; }
-    }
 
     /* ── lang toggle ── */
     #lang-extra { display: none; }
@@ -425,15 +394,14 @@
 
 
 <!-- ═══════════════════════════ FEATURES SECTION ═══════════════════════════ -->
-<section id="features" class="relative">
-  <div class="glow w-[500px] h-[500px] bg-av-lime/8 top-0 left-1/2 -translate-x-1/2"></div>
+<section id="features" class="py-28 px-6 relative overflow-hidden">
+  <div class="glow w-[600px] h-[600px] bg-av-lime/8 top-0 left-1/2 -translate-x-1/2"></div>
 
-  <!-- Sticky pin: sticks at top while scroll room passes on desktop -->
-  <div id="feat-sticky" class="px-6">
-    <div class="max-w-7xl mx-auto h-full flex flex-col">
+  <div class="max-w-7xl mx-auto">
+    <div>
 
       <!-- header -->
-      <div class="text-center pt-8 pb-4 flex-shrink-0">
+      <div class="text-center mb-24">
         <div class="pill glass-lime text-av-lime mb-4 inline-flex">
           <span class="w-1.5 h-1.5 rounded-full bg-av-lime"></span>
           Core Features
@@ -443,244 +411,65 @@
         </h2>
       </div>
 
-      <!-- two-col layout -->
-      <div class="flex-1 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center min-h-0 pb-8">
+      <!-- 4 feature rows -->
+      <div class="flex flex-col gap-28 lg:gap-36">
 
-        <!-- phone (left, desktop only) -->
-        <div class="hidden lg:flex flex-col items-center flex-shrink-0">
-          <div class="phone" id="feat-phone" style="height: 500px; width: 250px;">
-            <div class="phone-notch"></div>
-
-            <!-- Slide 0: Stock & Procurement — matches real app screenshot -->
-            <div class="pslide visible-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-0">
-              <!-- top bar -->
-              <div class="flex justify-end gap-3 mb-3">
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
-              </div>
-              <p class="text-white text-[18px] font-black mb-1">Stock <span class="text-av-lime">&amp;</span> Procurement<span class="text-av-lime">.</span></p>
-              <!-- AI row -->
-              <div class="flex items-center justify-between mb-3">
-                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Sell Timing Advisor</span>
-                <span class="text-av-muted text-[10px]">Show ›</span>
-              </div>
-              <!-- summary card -->
-              <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <p class="text-av-lime text-[10px] font-semibold mb-1">Farm: Farm 1</p>
-                <div class="flex items-baseline gap-2 mb-0.5">
-                  <span class="text-av-lime text-2xl font-black">202</span>
-                  <span class="text-white text-[11px] font-medium">In stock</span>
-                  <span class="text-av-lime text-[13px] font-black ml-auto">C$ 4,927.56</span>
+        <!-- ── 01 Inventory & Photos ── -->
+        <div class="feat-row flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div class="feat-phone flex-shrink-0 mx-auto lg:mx-0">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="flex flex-col bg-[#050505] px-3 pt-12 pb-0 h-full overflow-hidden">
+                <div class="flex justify-end gap-3 mb-3">
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
                 </div>
-                <p class="text-av-muted text-[9px]">10 sold · 0 dead · Pending receivables 232257.00</p>
-              </div>
-              <!-- filter card -->
-              <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E">
-                <p class="text-av-muted text-[9px] mb-1">View</p>
-                <div class="rounded-xl px-3 py-1.5 flex justify-between items-center mb-2" style="background:#111113">
-                  <span class="text-white text-[10px] font-medium">In Stock</span>
+                <p class="text-white text-[18px] font-black mb-1">Stock <span class="text-av-lime">&amp;</span> Procurement<span class="text-av-lime">.</span></p>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Sell Timing Advisor</span>
+                  <span class="text-av-muted text-[10px]">Show ›</span>
+                </div>
+                <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <p class="text-av-lime text-[10px] font-semibold mb-1">Farm: Farm 1</p>
+                  <div class="flex items-baseline gap-2 mb-0.5">
+                    <span class="text-av-lime text-2xl font-black">202</span>
+                    <span class="text-white text-[11px] font-medium">In stock</span>
+                    <span class="text-av-lime text-[13px] font-black ml-auto">C$ 4,927.56</span>
+                  </div>
+                  <p class="text-av-muted text-[9px]">10 sold · 0 dead · Pending receivables 232257.00</p>
+                </div>
+                <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E">
+                  <p class="text-av-muted text-[9px] mb-1">View</p>
+                  <div class="rounded-xl px-3 py-1.5 flex justify-between items-center mb-2" style="background:#111113">
+                    <span class="text-white text-[10px] font-medium">In Stock</span>
+                    <span class="text-av-muted text-[10px]">▾</span>
+                  </div>
+                  <div class="rounded-xl px-3 py-1.5 flex items-center gap-2 mb-2" style="background:#111113">
+                    <span class="text-av-muted text-[10px]">⌕</span>
+                    <span class="text-av-muted text-[10px]">Search stock</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-av-lime text-[10px] font-medium">Group by category</span>
+                    <div class="w-8 h-4 rounded-full bg-av-lime flex items-center justify-end px-0.5"><div class="w-3 h-3 rounded-full bg-[#050505]"></div></div>
+                  </div>
+                </div>
+                <p class="text-av-lime text-[10px] font-semibold mb-1">By category</p>
+                <div class="rounded-2xl px-3 py-2.5 flex items-center justify-between mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <span class="text-av-lime text-[11px] font-semibold">Chicken (101)</span>
                   <span class="text-av-muted text-[10px]">▾</span>
                 </div>
-                <div class="rounded-xl px-3 py-1.5 flex items-center gap-2 mb-2" style="background:#111113">
-                  <span class="text-av-muted text-[10px]">⌕</span>
-                  <span class="text-av-muted text-[10px]">Search stock</span>
+                <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">▤</span><span class="text-av-lime text-[8px] font-bold">Stock</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
                 </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-av-lime text-[10px] font-medium">Group by category</span>
-                  <div class="w-8 h-4 rounded-full bg-av-lime flex items-center justify-end px-0.5"><div class="w-3 h-3 rounded-full bg-[#050505]"></div></div>
-                </div>
-              </div>
-              <!-- category -->
-              <p class="text-av-lime text-[10px] font-semibold mb-1">By category</p>
-              <div class="rounded-2xl px-3 py-2.5 flex items-center justify-between mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <span class="text-av-lime text-[11px] font-semibold">Chicken (101)</span>
-                <span class="text-av-muted text-[10px]">▾</span>
-              </div>
-              <!-- bottom nav -->
-              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">▤</span><span class="text-av-lime text-[8px] font-bold">Stock</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
-              </div>
-            </div>
-
-            <!-- Slide 1: Health — matches real app screenshot -->
-            <div class="pslide hidden-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-1">
-              <div class="flex justify-end gap-3 mb-3">
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
-              </div>
-              <p class="text-white text-[18px] font-black mb-1">Health<span class="text-av-lime">.</span></p>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Vet: Proactive Care Guide</span>
-                <span class="text-av-muted text-[10px]">Show ›</span>
-              </div>
-              <!-- stats card -->
-              <div class="rounded-2xl p-3 mb-2 space-y-1.5" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <p class="text-av-lime text-[10px] font-semibold">Farm: Farm 1</p>
-                <div class="flex gap-3">
-                  <span class="text-white text-[10px]">Vaccinations <span class="text-av-lime font-bold">0</span></span>
-                  <span class="text-av-muted text-[10px]">·</span>
-                  <span class="text-white text-[10px]">Treatments <span class="text-av-lime font-bold">0</span></span>
-                </div>
-                <p class="text-[9px] leading-relaxed" style="color:#B7F20A">Food stock: 1 · <span style="color:#EF4444">Low: 0</span> · <span style="color:#EF4444">Expired: 1</span> · <span style="color:#B7F20A">Due vaccines: 2</span> · Feed logs: 0</p>
-                <div class="rounded-xl px-2 py-1 flex justify-between" style="background:#111113">
-                  <span class="text-white text-[10px]">All</span><span class="text-av-muted text-[10px]">▾</span>
-                </div>
-              </div>
-              <!-- dosage card -->
-              <div class="rounded-2xl p-2.5 mb-2 flex items-start gap-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <div class="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#2C2C2E"><span class="text-av-lime text-[12px]">⊞</span></div>
-                <div class="flex-1">
-                  <p class="text-av-lime text-[10px] font-semibold">Dosage recommendation</p>
-                  <p class="text-av-muted text-[9px] leading-relaxed">Select any animal for AI dosage &amp; feed advice by weight and age</p>
-                </div>
-                <span class="text-av-muted text-[10px] mt-0.5">›</span>
-              </div>
-              <!-- medicine -->
-              <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E">
-                <p class="text-av-lime text-[10px] font-semibold mb-0.5">Medicine stock</p>
-                <p class="text-av-muted text-[9px]">No medicine records yet.</p>
-              </div>
-              <!-- vaccination -->
-              <div class="rounded-2xl p-2.5 mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <p class="text-av-lime text-[10px] font-semibold mb-1">Vaccination schedules</p>
-                <div class="flex justify-between items-center">
-                  <div><p class="text-av-lime text-[9px] font-medium">Vaccination · 2026-03-13</p><p class="text-av-red text-[9px] font-bold">Overdue</p></div>
-                  <span class="text-av-muted text-[10px]">···</span>
-                </div>
-              </div>
-              <!-- bottom nav -->
-              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">🛡</span><span class="text-av-lime text-[8px] font-bold">Health</span></div>
-              </div>
-            </div>
-
-            <!-- Slide 2: Inventory & Finance — matches real app screenshot -->
-            <div class="pslide hidden-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-2">
-              <div class="flex justify-end gap-3 mb-3">
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">📊</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
-              </div>
-              <p class="text-white text-[16px] font-black mb-1">Inventory <span class="text-av-lime">&amp;</span> Finance<span class="text-av-lime">.</span></p>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Insight</span>
-                <span class="text-av-muted text-[10px]">Show ›</span>
-              </div>
-              <!-- farm selector -->
-              <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <p class="text-av-lime text-[10px] font-semibold mb-1.5">Farm: Farm 1</p>
-                <div class="grid grid-cols-2 gap-1.5">
-                  <div><p class="text-av-muted text-[8px] mb-0.5">Month</p><div class="rounded-lg px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[9px]">Full year</span><span class="text-av-muted text-[9px]">▾</span></div></div>
-                  <div><p class="text-av-muted text-[8px] mb-0.5">Year</p><div class="rounded-lg px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[9px]">2026</span><span class="text-av-muted text-[9px]">▾</span></div></div>
-                </div>
-              </div>
-              <!-- this year -->
-              <p class="text-av-lime text-[10px] font-semibold mb-1">This year</p>
-              <div class="grid grid-cols-2 gap-1.5 mb-2">
-                <div class="rounded-2xl p-2.5" style="background:#1C1C1E">
-                  <div class="flex items-center gap-1 mb-0.5"><span class="text-av-red text-[8px]">↘</span><span class="text-av-muted text-[8px]">Expenses</span></div>
-                  <p class="text-av-red text-[15px] font-black">C$ 306k</p>
-                </div>
-                <div class="rounded-2xl p-2.5" style="background:#1C1C1E">
-                  <div class="flex items-center gap-1 mb-0.5"><span class="text-av-lime text-[8px]">↗</span><span class="text-av-muted text-[8px]">Revenue</span></div>
-                  <p class="text-av-lime text-[15px] font-black">C$ 0.00</p>
-                </div>
-              </div>
-              <!-- net cash flow -->
-              <div class="rounded-2xl p-2.5 mb-2 flex items-center gap-2" style="background:#1C1C1E;border:1px solid rgba(239,68,68,0.3)">
-                <span class="text-av-red text-[10px]">⚠</span>
-                <div>
-                  <p class="text-av-muted text-[8px]">Net cash flow</p>
-                  <p class="text-av-lime text-[15px] font-black">-C$ 306k</p>
-                </div>
-              </div>
-              <!-- vs last year -->
-              <p class="text-av-lime text-[10px] font-semibold mb-1">Vs last year</p>
-              <div class="rounded-2xl p-2.5 mb-auto" style="background:#1C1C1E">
-                <div class="flex justify-between text-[9px]">
-                  <div><p class="text-av-muted mb-0.5">Last year</p><p class="text-av-red font-bold">C$ 0.00</p><p class="text-av-muted">C$ 0.00</p></div>
-                  <span class="text-av-muted self-center">⇄</span>
-                  <div class="text-right"><p class="text-av-muted mb-0.5">This year</p><p class="text-av-red font-bold">C$ 306k</p><p class="text-av-lime font-bold">C$ 0.00</p></div>
-                </div>
-              </div>
-              <!-- bottom nav -->
-              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">📊</span><span class="text-av-lime text-[8px] font-bold">Inv &amp; Fin</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
-              </div>
-            </div>
-
-            <!-- Slide 3: AI Farm Insights — matches real app screenshot -->
-            <div class="pslide hidden-slide flex flex-col bg-[#050505] px-3 pt-12 pb-0" id="pslide-3">
-              <div class="flex justify-end gap-3 mb-3">
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
-                <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
-              </div>
-              <p class="text-white text-[18px] font-black mb-1">Farms<span class="text-av-lime">.</span></p>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Farm Insights</span>
-                <span class="text-av-muted text-[10px]">Hide ∧</span>
-              </div>
-              <!-- AI climate alert -->
-              <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <div class="flex items-center gap-1.5 mb-2">
-                  <span class="text-[12px]">🌡</span>
-                  <p class="text-white text-[10px] font-bold">AI Climate Risk Alert</p>
-                </div>
-                <div class="rounded-xl p-2" style="background:#2A2A3A">
-                  <p class="text-av-muted text-[9px] leading-relaxed">Fluctuating temperatures (-6°C to 11°C) &amp; 20mm rainfall create a severe respiratory distress risk for your 111 broilers. Stabilize barn ventilation immediately to manage humidity and prevent cold drafts.</p>
-                </div>
-              </div>
-              <!-- mortality risk -->
-              <div class="rounded-2xl p-3 mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
-                <div class="flex items-center gap-1.5 mb-2">
-                  <span class="text-[10px]">🔴</span>
-                  <p class="text-white text-[10px] font-bold">Mortality Risk Alert</p>
-                </div>
-                <div class="rounded-xl p-2" style="background:#2D3B1A">
-                  <p class="text-av-lime text-[8px] font-bold leading-relaxed uppercase">RISK: MODERATE · TARGET: BROILER · CAUSE: RESPIRATORY STRESS DUE TO SEASONAL TEMPERATURE FLUCTUATIONS &amp; VENTILATION CHALLENGES</p>
-                </div>
-              </div>
-              <!-- bottom nav -->
-              <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">⌂</span><span class="text-av-lime text-[8px] font-bold">Farms</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
-                <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
               </div>
             </div>
           </div>
-
-          <!-- step dots -->
-          <div class="flex gap-3 mt-6">
-            <div class="step-dot active" id="dot-0" onclick="manualSlide(0)"></div>
-            <div class="step-dot" id="dot-1" onclick="manualSlide(1)"></div>
-            <div class="step-dot" id="dot-2" onclick="manualSlide(2)"></div>
-            <div class="step-dot" id="dot-3" onclick="manualSlide(3)"></div>
-          </div>
-        </div>
-
-        <!-- feature text panels (absolutely stacked on desktop) -->
-        <div class="flex-1 relative min-h-0 self-stretch" id="feat-panels">
-
-          <!-- panel 0 -->
-          <div class="feat-panel fp active pl-8 border-l border-av-border" data-feat="0">
+          <div class="feat-text flex-1">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.1);border:1px solid rgba(183,242,10,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             </div>
@@ -688,23 +477,65 @@
             <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">Inventory<br/><span class="grad-lime">&amp; Photos</span></h3>
             <p class="text-av-muted text-lg leading-relaxed mb-6">Snap, save, and organize your entire herd instantly. Add animals with photos, custom tags, breeds, and weights — then find any record in seconds with powerful search and filters.</p>
             <ul class="space-y-3">
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Photo-first animal profiles with custom tags &amp; categories
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                QR &amp; barcode scanner for instant animal lookup
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Bulk actions: sell, mark dead, transfer between farms
-              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Photo-first animal profiles with custom tags &amp; categories</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>QR &amp; barcode scanner for instant animal lookup</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Bulk actions: sell, mark dead, transfer between farms</li>
             </ul>
           </div>
+        </div>
 
-          <!-- panel 1 -->
-          <div class="feat-panel fp inactive pl-8 border-l border-av-border" data-feat="1" style="pointer-events:none">
+        <!-- ── 02 Health & Mortality ── -->
+        <div class="feat-row flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
+          <div class="feat-phone flex-shrink-0 mx-auto lg:mx-0">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="flex flex-col bg-[#050505] px-3 pt-12 pb-0 h-full overflow-hidden">
+                <div class="flex justify-end gap-3 mb-3">
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+                </div>
+                <p class="text-white text-[18px] font-black mb-1">Health<span class="text-av-lime">.</span></p>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Vet: Proactive Care Guide</span>
+                  <span class="text-av-muted text-[10px]">Show ›</span>
+                </div>
+                <div class="rounded-2xl p-3 mb-2 space-y-1.5" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <p class="text-av-lime text-[10px] font-semibold">Farm: Farm 1</p>
+                  <div class="flex gap-3">
+                    <span class="text-white text-[10px]">Vaccinations <span class="text-av-lime font-bold">0</span></span>
+                    <span class="text-av-muted text-[10px]">·</span>
+                    <span class="text-white text-[10px]">Treatments <span class="text-av-lime font-bold">0</span></span>
+                  </div>
+                  <p class="text-[9px] leading-relaxed" style="color:#B7F20A">Food stock: 1 · <span style="color:#EF4444">Low: 0</span> · <span style="color:#EF4444">Expired: 1</span> · <span style="color:#B7F20A">Due vaccines: 2</span> · Feed logs: 0</p>
+                  <div class="rounded-xl px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[10px]">All</span><span class="text-av-muted text-[10px]">▾</span></div>
+                </div>
+                <div class="rounded-2xl p-2.5 mb-2 flex items-start gap-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <div class="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:#2C2C2E"><span class="text-av-lime text-[12px]">⊞</span></div>
+                  <div class="flex-1">
+                    <p class="text-av-lime text-[10px] font-semibold">Dosage recommendation</p>
+                    <p class="text-av-muted text-[9px] leading-relaxed">Select any animal for AI dosage &amp; feed advice by weight and age</p>
+                  </div>
+                  <span class="text-av-muted text-[10px] mt-0.5">›</span>
+                </div>
+                <div class="rounded-2xl p-2.5 mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <p class="text-av-lime text-[10px] font-semibold mb-1">Vaccination schedules</p>
+                  <div class="flex justify-between items-center">
+                    <div><p class="text-av-lime text-[9px] font-medium">Vaccination · 2026-03-13</p><p class="text-av-red text-[9px] font-bold">Overdue</p></div>
+                    <span class="text-av-muted text-[10px]">···</span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">🛡</span><span class="text-av-lime text-[8px] font-bold">Health</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feat-text flex-1">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </div>
@@ -712,23 +543,63 @@
             <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">Health<br/><span class="text-av-red">&amp; Mortality</span></h3>
             <p class="text-av-muted text-lg leading-relaxed mb-6">Keep your livestock thriving with real-time medical tracking. Log vaccinations, treatments, medications, and food stock — with vital alerts before problems escalate.</p>
             <ul class="space-y-3">
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Full vaccination &amp; treatment history per animal
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Mortality logs with AI-analyzed cause of death
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Push alerts for overdue treatments &amp; low medication stock
-              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Full vaccination &amp; treatment history per animal</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Mortality logs with AI-analyzed cause of death</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Push alerts for overdue treatments &amp; low medication stock</li>
             </ul>
           </div>
+        </div>
 
-          <!-- panel 2 -->
-          <div class="feat-panel fp inactive pl-8 border-l border-av-border" data-feat="2" style="pointer-events:none">
+        <!-- ── 03 Finance & Procurement ── -->
+        <div class="feat-row flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div class="feat-phone flex-shrink-0 mx-auto lg:mx-0">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="flex flex-col bg-[#050505] px-3 pt-12 pb-0 h-full overflow-hidden">
+                <div class="flex justify-end gap-3 mb-3">
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">📊</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+                </div>
+                <p class="text-white text-[16px] font-black mb-1">Inventory <span class="text-av-lime">&amp;</span> Finance<span class="text-av-lime">.</span></p>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Insight</span>
+                  <span class="text-av-muted text-[10px]">Show ›</span>
+                </div>
+                <div class="rounded-2xl p-2.5 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <p class="text-av-lime text-[10px] font-semibold mb-1.5">Farm: Farm 1</p>
+                  <div class="grid grid-cols-2 gap-1.5">
+                    <div><p class="text-av-muted text-[8px] mb-0.5">Month</p><div class="rounded-lg px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[9px]">Full year</span><span class="text-av-muted text-[9px]">▾</span></div></div>
+                    <div><p class="text-av-muted text-[8px] mb-0.5">Year</p><div class="rounded-lg px-2 py-1 flex justify-between" style="background:#111113"><span class="text-white text-[9px]">2026</span><span class="text-av-muted text-[9px]">▾</span></div></div>
+                  </div>
+                </div>
+                <p class="text-av-lime text-[10px] font-semibold mb-1">This year</p>
+                <div class="grid grid-cols-2 gap-1.5 mb-2">
+                  <div class="rounded-2xl p-2.5" style="background:#1C1C1E">
+                    <div class="flex items-center gap-1 mb-0.5"><span class="text-av-red text-[8px]">↘</span><span class="text-av-muted text-[8px]">Expenses</span></div>
+                    <p class="text-av-red text-[15px] font-black">C$ 306k</p>
+                  </div>
+                  <div class="rounded-2xl p-2.5" style="background:#1C1C1E">
+                    <div class="flex items-center gap-1 mb-0.5"><span class="text-av-lime text-[8px]">↗</span><span class="text-av-muted text-[8px]">Revenue</span></div>
+                    <p class="text-av-lime text-[15px] font-black">C$ 0.00</p>
+                  </div>
+                </div>
+                <div class="rounded-2xl p-2.5 mb-auto flex items-center gap-2" style="background:#1C1C1E;border:1px solid rgba(239,68,68,0.3)">
+                  <span class="text-av-red text-[10px]">⚠</span>
+                  <div><p class="text-av-muted text-[8px]">Net cash flow</p><p class="text-av-lime text-[15px] font-black">-C$ 306k</p></div>
+                </div>
+                <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">⌂</span><span class="text-av-muted text-[8px]">Farms</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">📊</span><span class="text-av-lime text-[8px] font-bold">Inv &amp; Fin</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feat-text flex-1">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.25)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
             </div>
@@ -736,23 +607,52 @@
             <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">Finance<br/><span class="text-av-cyan">&amp; Procurement</span></h3>
             <p class="text-av-muted text-lg leading-relaxed mb-6">Protect your bottom line with seamless financial logs. Track expenses, revenue, buyer ledgers, and orders — with daily reports that give you a crystal-clear picture of profitability.</p>
             <ul class="space-y-3">
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Daybook, buyer ledger &amp; receivables in one place
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Procurement orders, suppliers &amp; transport tracking
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Combined inventory + financial reports in one view
-              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Daybook, buyer ledger &amp; receivables in one place</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Procurement orders, suppliers &amp; transport tracking</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(0,199,190,0.1);border:1px solid rgba(0,199,190,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00C7BE" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Combined inventory + financial reports in one view</li>
             </ul>
           </div>
+        </div>
 
-          <!-- panel 3 -->
-          <div class="feat-panel fp inactive pl-8 border-l border-av-border" data-feat="3" style="pointer-events:none">
+        <!-- ── 04 AI Insights ── -->
+        <div class="feat-row flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
+          <div class="feat-phone flex-shrink-0 mx-auto lg:mx-0">
+            <div class="phone">
+              <div class="phone-notch"></div>
+              <div class="flex flex-col bg-[#050505] px-3 pt-12 pb-0 h-full overflow-hidden">
+                <div class="flex justify-end gap-3 mb-3">
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">☽</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">⚙</span></div>
+                  <div class="w-7 h-7 rounded-full bg-[#1C1C1E] flex items-center justify-center"><span class="text-av-lime text-[11px]">+</span></div>
+                </div>
+                <p class="text-white text-[18px] font-black mb-1">Farms<span class="text-av-lime">.</span></p>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-av-lime text-[10px] font-semibold flex items-center gap-1"><span>✦</span> AI Farm Insights</span>
+                  <span class="text-av-muted text-[10px]">Hide ∧</span>
+                </div>
+                <div class="rounded-2xl p-3 mb-2" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <div class="flex items-center gap-1.5 mb-2"><span class="text-[12px]">🌡</span><p class="text-white text-[10px] font-bold">AI Climate Risk Alert</p></div>
+                  <div class="rounded-xl p-2" style="background:#2A2A3A">
+                    <p class="text-av-muted text-[9px] leading-relaxed">Fluctuating temperatures (-6°C to 11°C) &amp; 20mm rainfall create a severe respiratory distress risk for your 111 broilers. Stabilize barn ventilation immediately to manage humidity and prevent cold drafts.</p>
+                  </div>
+                </div>
+                <div class="rounded-2xl p-3 mb-auto" style="background:#1C1C1E;border-top:2px solid #B7F20A">
+                  <div class="flex items-center gap-1.5 mb-2"><span class="text-[10px]">🔴</span><p class="text-white text-[10px] font-bold">Mortality Risk Alert</p></div>
+                  <div class="rounded-xl p-2" style="background:#2D3B1A">
+                    <p class="text-av-lime text-[8px] font-bold leading-relaxed uppercase">RISK: MODERATE · TARGET: BROILER · CAUSE: RESPIRATORY STRESS DUE TO SEASONAL TEMPERATURE FLUCTUATIONS &amp; VENTILATION CHALLENGES</p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-around pt-2 pb-1 mt-2" style="border-top:1px solid #2C2C2E">
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-lime text-[14px]">⌂</span><span class="text-av-lime text-[8px] font-bold">Farms</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">▤</span><span class="text-av-muted text-[8px]">Stock</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">◎</span><span class="text-av-muted text-[8px]">Breeding</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">📊</span><span class="text-av-muted text-[8px]">Inv &amp; Fin</span></div>
+                  <div class="flex flex-col items-center gap-0.5"><span class="text-av-muted text-[14px]">🛡</span><span class="text-av-muted text-[8px]">Health</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feat-text flex-1">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.35)">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
@@ -760,28 +660,14 @@
             <h3 class="text-4xl font-black tracking-tight mt-2 mb-4">AI Insights<br/><span class="grad-lime">by Gemini</span></h3>
             <p class="text-av-muted text-lg leading-relaxed mb-6">Your 24/7 AI Farm Assistant. Get instant vet recommendations, financial analytics, and smart decisions — powered by Google Gemini and personalized to your exact farm data.</p>
             <ul class="space-y-3">
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Personalized insights from your live farm data
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Responds in your language — all 17+ supported
-              </li>
-              <li class="flex items-start gap-3 text-av-muted text-sm">
-                <div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-                Mortality analysis, financial coaching &amp; vet care tips
-              </li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Personalized insights from your live farm data</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Responds in your language — all 17+ supported</li>
+              <li class="flex items-start gap-3 text-av-muted text-sm"><div class="w-5 h-5 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center" style="background:rgba(183,242,10,0.15);border:1px solid rgba(183,242,10,0.3)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B7F20A" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>Mortality analysis, financial coaching &amp; vet care tips</li>
             </ul>
           </div>
+        </div>
 
-        </div><!-- /feat-panels -->
-      </div><!-- /two-col -->
-    </div><!-- /max-w-7xl -->
-  </div><!-- /feat-sticky -->
-
-  <!-- scroll room: 3×100vh gives the sticky panel room to pin through 4 slides -->
-  <div class="feat-scroll-room"></div>
+      </div><!-- /feat rows -->
 </section>
 
 
@@ -1090,53 +976,20 @@ gsap.from('#bento-grid > *', {
   y: 40, opacity: 0, scale: 0.97, duration: 0.65, ease: 'power2.out', stagger: 0.1
 });
 
-/* ─── 7. Feature slide switching ─── */
-let currentSlide = 0;
-let scrollLocked = false;
-let scrollLockTimer = null;
-
-function applySlide(idx) {
-  const prev = document.getElementById('pslide-' + currentSlide);
-  const next = document.getElementById('pslide-' + idx);
-  if (prev) { prev.classList.remove('visible-slide'); prev.classList.add('hidden-slide'); }
-  if (next) { next.classList.remove('hidden-slide'); next.classList.add('visible-slide'); }
-  document.querySelectorAll('.fp').forEach((p, i) => {
-    p.classList.toggle('active',   i === idx);
-    p.classList.toggle('inactive', i !== idx);
-    p.style.pointerEvents = (i === idx) ? '' : 'none';
+/* ─── 7. Feature row animations ─── */
+document.querySelectorAll('.feat-row').forEach((row, i) => {
+  const phone = row.querySelector('.feat-phone');
+  const text  = row.querySelector('.feat-text');
+  const phoneX = i % 2 === 0 ? -70 : 70;
+  const textX  = i % 2 === 0 ? 70 : -70;
+  gsap.from(phone, {
+    scrollTrigger: { trigger: row, start: 'top 78%', toggleActions: 'play none none none' },
+    x: phoneX, opacity: 0, duration: 1, ease: 'power3.out'
   });
-  document.querySelectorAll('.step-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-  currentSlide = idx;
-}
-
-function manualSlide(idx) {
-  scrollLocked = true;
-  clearTimeout(scrollLockTimer);
-  scrollLockTimer = setTimeout(() => { scrollLocked = false; }, 1500);
-  applySlide(idx);
-}
-
-// Scroll-driven: maps section scroll progress to slide index
-let _sectionDocTop = null; // cached once on first scroll
-lenis.on('scroll', ({ scroll }) => {
-  if (window.innerWidth < 1024 || scrollLocked) return;
-  const section = document.getElementById('features');
-  if (!section) return;
-  const navH = 72; // fixed navbar height — feat-sticky uses top:72px
-  // Cache the document-absolute section top (constant for static content)
-  if (_sectionDocTop === null) {
-    _sectionDocTop = section.getBoundingClientRect().top + scroll;
-  }
-  // Sticky activates when section top reaches 72px from viewport top
-  const stickyStart = _sectionDocTop - navH;
-  // Scrollable range = total section height minus the sticky viewport height
-  const scrollableRange = section.offsetHeight - (window.innerHeight - navH);
-  if (scrollableRange <= 0) return;
-  const scrolledIn = Math.max(0, scroll - stickyStart);
-  const progress = Math.min(1, scrolledIn / scrollableRange);
-  // 4 slides across 400vh → each slide = 100vh
-  const slideIdx = Math.min(3, Math.floor(progress * 4));
-  if (slideIdx !== currentSlide) applySlide(slideIdx);
+  gsap.from(text.children, {
+    scrollTrigger: { trigger: row, start: 'top 78%', toggleActions: 'play none none none' },
+    x: textX, opacity: 0, duration: 0.8, ease: 'power2.out', stagger: 0.1
+  });
 });
 
 /* ─── 8. Languages toggle ─── */
